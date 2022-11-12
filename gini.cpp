@@ -10,7 +10,7 @@ float find_gini(vector<string> &alldata)
 	int yes_instances, no_instances, all_instances, y_instances, n_instances;
 	yes_instances = no_instances = all_instances = y_instances = n_instances = 0;
 	int instance_index = 0;
-	float gini[5]; // as we have 5 categories to filter data
+	vector<float> gini(5, 0); // as we have 5 categories to filter data
 	// gain[0] is reccmendations
 	// gain[1] is reservations
 	// gain[2] is pricing
