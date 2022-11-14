@@ -31,11 +31,12 @@ public:
 };
 vector<vector<string>> RETRIEVE_DATA(string filename)
 {
+    // Code For Converting .csv data to strings (vector:2D)
     vector<vector<string>> record;
     vector<string> row;
     string line, data;
 
-    fstream file("DS-data.csv", ios::in);
+    fstream file(filename, ios::in);
     if (file.is_open())
     {
         while (getline(file, line))
@@ -49,14 +50,6 @@ vector<vector<string>> RETRIEVE_DATA(string filename)
             }
             record.push_back(row);
         }
-        // for (int i = 0; i < record.size(); i++)
-        // {
-        //     for (int j = 0; j < record[i].size(); j++)
-        //     {
-        //         cout << record[i][j] << " ";
-        //     }
-        //     cout << endl;
-        // }
     }
     else
     {
@@ -89,16 +82,15 @@ public:
     }
     vector<vector<int>> Bit_Mask(vector<vector<string>> &data)
     {
+        // Converting string data to integers (AKA masking)
         vector<vector<int>> cvt(data.size(), vector<int>(data[0].size() - 2, 0));
-        vector<string> alreadyEx;
-        int index = 2;
+        int index = 2;             // First Two Cols not necessary here 
         int row = 0, col = 0;
         map<string, int> mp;
 
         for (index = 2; index < data[0].size(); index += 1)
         {
             row = 0;
-            alreadyEx.clear();
             mp.clear();
             for (int i = 0; i < data.size(); i++)
             {
@@ -106,10 +98,6 @@ public:
             }
             for (int i = 0; i < data.size(); i++)
             {
-                if (alreadyExist(data[i][index], alreadyEx) == 0)
-                {
-                    alreadyEx.push_back(data[i][index]);
-                }
                 cvt[row][col] = mp[data[i][index]] % 4;
                 row++;
             }
