@@ -10,15 +10,16 @@ using namespace std;
 class TreeNode
 {
 public:
-    int ColVal;                  // 1. int column value.. refers to column split on by parent node
-                                 //    null in root's case
-    int ColSplitOn;              // 2. int column split on.. column this node splits on
-                                 //    value doesn't matter if guess is not null
-    int Guess;                   // 3. int guess
-                                 //    null unless node is a leaf case
-    vector<TreeNode *> children; // 4. vector of node pointers called "children"
-                                 //    pointers to all of the children of this node
-                                 //    also doesn't matter if node is base case
+    int ColVal;      // 1. int column value.. refers to column split on by parent node
+                     //    null in root's case
+    int ColSplitOn;  // 2. int column split on.. column this node splits on
+                     //    value doesn't matter if guess is not null
+    int Guess;       // 3. int guess
+                     //    null unless node is a leaf case
+    TreeNode *left;  // vector<TreeNode *> children; // 4. vector of node pointers called "children"
+    TreeNode *right; //    pointers to all of the children of this node
+                     //    also doesn't matter if node is base case
+    // left = yes , right = no
     TreeNode()
     {
         ColVal = ColSplitOn = Guess = 0;
@@ -52,29 +53,40 @@ vector<vector<string>> RETRIEVE_DATA(string filename)
     }
     return record;
 }
+bool isIdentical(string c, vector<string> &alreadyE)
+{
+    for (auto n : alreadyE)
+    {
+        if (c == n)
+            return true;
+    }
+    alreadyE.push_back(c);
+    return false;
+}
 vector<vector<int>> Bit_Mask(vector<vector<string>> &data)
 {
     // Converting string data to integers (AKA masking)
     vector<vector<int>> cvt(data.size(), vector<int>(data[0].size() - 2, 0));
     int index = 2; // First Two Cols not necessary here
     int row = 0, col = 0;
-    map<string, int> mp;
 
-    vector<int> T_index = {1,2,3,4};
     for (index = 2; index < data[0].size(); index += 1)
     {
         row = 0;
-        mp.clear();
+        int val = 0;
+        vector<string> temp;
+        map<string, int> mp;
         for (int i = 0; i < data.size(); i++)
         {
-            mp[data[i][index]] = T_index[];    // calculating each attribute's occurence
+            if (isIdentical(data[i][index], temp) == 0)
+            {
+                mp[data[i][index]] = i;
+            }
+            cvt[row][col] = mp[data[i][index]];
+            row++;
         }
-        for (int i = 0; i < data.size(); i++)
-        {
-            cvt[row][col] = mp[data[i][index]] % 4;  // Hope that attributes are not more than 4: BEST CASE - All col have same number of attributes
-            row++;   // next row
-        }
-        col++;       // next Col
+
+        col++; // next Col
     }
     return cvt;
 }
@@ -84,12 +96,14 @@ class DecisionTree
 public:
     TreeNode *root;
     vector<vector<int>> Data;
+    vector<vector<string>> DataInString;
     // vector<vector<int>> colVals;
     DecisionTree(string filename)
     {
         // This Constructor Will Fetch The Data and convert to integers
-        vector<vector<string>> s = RETRIEVE_DATA(filename);
-        this->Data = Bit_Mask(s);
+        root = new TreeNode;
+        this->DataInString = RETRIEVE_DATA(filename);
+        this->Data = Bit_Mask(DataInString);
     }
 };
 
@@ -109,9 +123,11 @@ void PrintData(vector<vector<T>> &data)
 int main(int argc, char const *argv[])
 {
     // Started 11/2/22
-    DecisionTree DT("DS-data.csv");
+    DecisionTree DT("TEMP.csv");
     // DT.Bit_Mask(DT.Data);
-    PrintData<int>(DT.Data);
+    // PrintData<int>(DT.Data);
+    pair<string, int> p = DT.getMajorityLabel(DT.DataInString);
+    cout << p.first << ", " << p.second << endl;
 
     return 0;
 }
