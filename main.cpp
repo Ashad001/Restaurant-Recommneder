@@ -10,20 +10,15 @@ using namespace std;
 class TreeNode
 {
 public:
-    // 1. int column value.. refers to column split on by parent node
-    //    null in root's case
-    int ColVal;
-    // 2. int column split on.. column this node splits on
-    //    value doesn't matter if guess is not null
-    int ColSplitOn;
-    // 3. int guess
-    //    null unless node is a leaf case
-    int Guess; // On leaf!
-    // 4. vector of node pointers called "children"
-    //    pointers to all of the children of this node
-    //    also doesn't matter if node is base case
-    vector<TreeNode *> children;
-    // constructor
+    int ColVal;                  // 1. int column value.. refers to column split on by parent node
+                                 //    null in root's case
+    int ColSplitOn;              // 2. int column split on.. column this node splits on
+                                 //    value doesn't matter if guess is not null
+    int Guess;                   // 3. int guess
+                                 //    null unless node is a leaf case
+    vector<TreeNode *> children; // 4. vector of node pointers called "children"
+                                 //    pointers to all of the children of this node
+                                 //    also doesn't matter if node is base case
     TreeNode()
     {
         ColVal = ColSplitOn = Guess = 0;
@@ -65,20 +60,21 @@ vector<vector<int>> Bit_Mask(vector<vector<string>> &data)
     int row = 0, col = 0;
     map<string, int> mp;
 
+    vector<int> T_index = {1,2,3,4};
     for (index = 2; index < data[0].size(); index += 1)
     {
         row = 0;
         mp.clear();
         for (int i = 0; i < data.size(); i++)
         {
-            mp[data[i][index]]++;
+            mp[data[i][index]] = T_index[];    // calculating each attribute's occurence
         }
         for (int i = 0; i < data.size(); i++)
         {
-            cvt[row][col] = mp[data[i][index]] % 4;
-            row++;
+            cvt[row][col] = mp[data[i][index]] % 4;  // Hope that attributes are not more than 4: BEST CASE - All col have same number of attributes
+            row++;   // next row
         }
-        col++;
+        col++;       // next Col
     }
     return cvt;
 }
@@ -91,7 +87,7 @@ public:
     // vector<vector<int>> colVals;
     DecisionTree(string filename)
     {
-        // This Constructor Will Fetch The Data -- OVER @HASEEB
+        // This Constructor Will Fetch The Data and convert to integers
         vector<vector<string>> s = RETRIEVE_DATA(filename);
         this->Data = Bit_Mask(s);
     }
