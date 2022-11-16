@@ -5,6 +5,7 @@
 #include <fstream>
 #include <algorithm>
 #include <sstream>
+#include <cmath>
 using namespace std;
 
 class TreeNode
@@ -141,6 +142,13 @@ public:
         }
         return vp;
     }
+    double EntropyOfCol(pair<int, int> p)
+    {
+        double total = double(p.first + p.second);
+
+        double ret = -1 * (double(p.first / total) * log(double(p.first / total)) / log(2)) - 1 * (double(p.second / total) * log(double(p.second / total)) / log(2));
+        return (isnan(ret)) ? 0 : ret;
+    }
 };
 
 template <class T>
@@ -158,12 +166,13 @@ void PrintData(vector<vector<T>> &data)
 
 int main(int argc, char const *argv[])
 {
-    DecisionTree DT("DS-data.csv");
-    // vector<pair<int, int>> v = DT.CountResults(3);
-    // for(auto n : v)
-    // {
-    //     cout << n.first << ", " << n.second << endl;
-    // }
+    DecisionTree DT("TEMP.csv");
+    vector<pair<int, int>> v = DT.CountResults(3);  // -1 for overall and pass col index (0-4 from DATA(integers)) to get entropy of each attribute's attribute
+    for (auto n : v)
+    {
+        cout << DT.EntropyOfCol(n) << endl;
+        cout << n.first << ", " << n.second << endl;
+    }
     // Started 11/2/22
     // DT.Bit_Mask(DT.Data);
     // PrintData<int>(DT.Data);

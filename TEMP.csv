@@ -4,28 +4,4 @@ Dunkin,1,no,below 5k,American,Breakfast
 Xander's,1,yes,below 5k,American,Lunch
 Xander's,0,yes,above 5k,American,Dinner
 Coconut Grove,1,yes,below 5k,Desi,Lunch
-Coconut Grove,0,yes,above 5k,Desi,Dinner
-Meat the Cheese,1,yes,below 5k,Middle Eastern,Dinner
-Angeethi,0,no,above 5k,Middle Eastern,Lunch
-SAGKH,1,no,below 5k,Desi,Dinner
-No Lies Fries,0,no,below 5k,American,Lunch
-Mandi House,1,yes,above 5k,Middle Eastern,Dinner
-Dominos,1,no,below 5k,American,Lunch
-Dominos,1,no,below 5k,American,Dinner
-Zeytin,1,yes,below 5k,Middle Eastern,Dinner
-Al Kabab,1,no,below 5k,Desi,Dinner
-Zameer Ansari,1,no,above 5k,Middle Eastern,Dinner
-Zameer Ansari,0,no,below 5k,Middle Eastern,Lunch
-Lal Qila,0,yes,above 5k,Desi,Dinner
-Lal Qila,1,yes,below 5k,Middle Eastern,Dinner
-Pf Changs,0,no,above 5k,Chinese,Dinner
-Ginsoy,0,no,below 5k,Chinese,Lunch
-Wang Wang,0,yes,above 5k,Chinese,Dinner
-Bam Bou,1,yes,below 5k,Chinese,Lunch
-Bam Bou,1,yes,above 5k,Chinese,Dinner
-Burger o'clock,0,no,below 5k,American,Lunch
-Burger o'clock,1,no,above 5k,American,Dinner
-Oh my Grill,1,no,below 5k,American,Lunch
-Oh my Grill,1,yes,above 5k,American,Dinner
-Aussies,1,no,above 5k,American,Lunch
-Aussies,1,no,above 5k,American,Breakfast
+Coconut Grove,1,yes,above 5k,Desi,Dinner
