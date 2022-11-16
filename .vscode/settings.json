@@ -2,6 +2,7 @@
     "files.associations": {
         "vector": "cpp",
         "ostream": "cpp",
-        "xtree": "cpp"
+        "xtree": "cpp",
+        "map": "cpp"
     }
 }

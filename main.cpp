@@ -97,6 +97,7 @@ public:
     TreeNode *root;
     vector<vector<int>> Data;
     vector<vector<string>> DataInString;
+    vector<int> results;
     // vector<vector<int>> colVals;
     DecisionTree(string filename)
     {
@@ -104,6 +105,41 @@ public:
         root = new TreeNode;
         this->DataInString = RETRIEVE_DATA(filename);
         this->Data = Bit_Mask(DataInString);
+        for (int i = 0; i < DataInString.size(); i++)
+        {
+            results.push_back(stoi(DataInString[i][1]));
+        }
+    }
+    vector<pair<int, int>> CountResults(int index)
+    {
+        vector<pair<int, int>> vp;
+        int count0{0}, count1{0};
+        if (index < 0)
+        {
+            for (int i = 0; i < results.size(); i++)
+            {
+                count0 += (results[i] == 0) ? 1 : 0;
+                count1 += (results[i] == 1) ? 1 : 0;
+            }
+            vp.push_back({count1, count0});
+        }
+        else
+        {
+            map<int, int> mp;
+            map<int, int> temp;
+            for (int i = 0; i < Data.size(); i++)
+            {
+                temp[Data[i][index]]++;
+                mp[Data[i][index]] += results[i];
+            }
+            for (auto i = mp.begin(), j = temp.begin(); i != mp.end() && j != temp.end(); i++, j++)
+            {
+                count1 = i->second;
+                count0 = j->second - i->second;
+                vp.push_back({count1, count0});
+            }
+        }
+        return vp;
     }
 };
 
@@ -122,12 +158,17 @@ void PrintData(vector<vector<T>> &data)
 
 int main(int argc, char const *argv[])
 {
+    DecisionTree DT("DS-data.csv");
+    // vector<pair<int, int>> v = DT.CountResults(3);
+    // for(auto n : v)
+    // {
+    //     cout << n.first << ", " << n.second << endl;
+    // }
     // Started 11/2/22
-    DecisionTree DT("TEMP.csv");
     // DT.Bit_Mask(DT.Data);
     // PrintData<int>(DT.Data);
-    pair<string, int> p = DT.getMajorityLabel(DT.DataInString);
-    cout << p.first << ", " << p.second << endl;
+    // pair<string, int> p = DT.getMajorityLabel(DT.DataInString);
+    // cout << p.first << ", " << p.second << endl;
 
     return 0;
 }
