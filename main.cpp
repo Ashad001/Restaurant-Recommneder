@@ -3,10 +3,13 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <array>
 #include <algorithm>
 #include <sstream>
 #include <cmath>
 using namespace std;
+using DataFrame = vector<vector<int>> ;
+
 
 class TreeNode
 {
@@ -16,7 +19,8 @@ public:
     int ColSplitOn;  // 2. int column split on.. column this node splits on
                      //    value doesn't matter if guess is not null
     int Guess;       // 3. int guess
-                     //    null unless node is a leaf case
+                     //    null unless node is a lea
+                     f case
     TreeNode *left;  // vector<TreeNode *> children; // 4. vector of node pointers called "children"
     TreeNode *right; //    pointers to all of the children of this node
                      //    also doesn't matter if node is base case
@@ -126,14 +130,14 @@ public:
         }
         else
         {
-            map<int, int> mp;
-            map<int, int> temp;
+            map<int, int> countLabels;
+            map<int, int> countAll;
             for (int i = 0; i < Data.size(); i++)
             {
-                temp[Data[i][index]]++;
-                mp[Data[i][index]] += results[i];
+                countAll[Data[i][index]]++;
+                countLabels[Data[i][index]] += results[i];
             }
-            for (auto i = mp.begin(), j = temp.begin(); i != mp.end() && j != temp.end(); i++, j++)
+            for (auto i = countLabels.begin(), j = countAll.begin(); i != countLabels.end() && j != countAll.end(); i++, j++)
             {
                 count1 = i->second;
                 count0 = j->second - i->second;
@@ -146,7 +150,7 @@ public:
     {
         double total = double(p.first + p.second);
 
-        double ret = -1 * (double(p.first / total) * log(double(p.first / total)) / log(2)) - 1 * (double(p.second / total) * log(double(p.second / total)) / log(2));
+        double ret = -1 * (double(p.first / total) * log2(double(p.first / total))) - 1 * (double(p.second / total) * log2(double(p.second / total)));
         return (isnan(ret)) ? 0 : ret;
     }
 };
@@ -167,7 +171,7 @@ void PrintData(vector<vector<T>> &data)
 int main(int argc, char const *argv[])
 {
     DecisionTree DT("TEMP.csv");
-    vector<pair<int, int>> v = DT.CountResults(3);  // -1 for overall and pass col index (0-4 from DATA(integers)) to get entropy of each attribute's attribute
+    vector<pair<int, int>> v = DT.CountResults(2); // -1 for overall and pass col index (0-4 from DATA(integers)) to get entropy of each attribute's attribute
     for (auto n : v)
     {
         cout << DT.EntropyOfCol(n) << endl;
