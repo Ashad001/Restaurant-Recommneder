@@ -8,9 +8,20 @@
 #include <sstream>
 #include <cmath>
 using namespace std;
-using DataFrame = vector<vector<int>> ;
+using DataFrame = vector<vector<int>>;
 
-
+template <class T>
+void PrintData(vector<vector<T>> &data)
+{
+    for (auto row : data)
+    {
+        for (auto num : row)
+        {
+            cout << num << ", ";
+        }
+        cout << endl;
+    }
+}
 class TreeNode
 {
 public:
@@ -19,8 +30,7 @@ public:
     int ColSplitOn;  // 2. int column split on.. column this node splits on
                      //    value doesn't matter if guess is not null
     int Guess;       // 3. int guess
-                     //    null unless node is a lea
-                     f case
+                     //    null unless node is a leaf
     TreeNode *left;  // vector<TreeNode *> children; // 4. vector of node pointers called "children"
     TreeNode *right; //    pointers to all of the children of this node
                      //    also doesn't matter if node is base case
@@ -68,10 +78,10 @@ bool isIdentical(string c, vector<string> &alreadyE)
     alreadyE.push_back(c);
     return false;
 }
-vector<vector<int>> Bit_Mask(vector<vector<string>> &data)
+DataFrame Bit_Mask(vector<vector<string>> &data)
 {
     // Converting string data to integers (AKA masking)
-    vector<vector<int>> cvt(data.size(), vector<int>(data[0].size() - 2, 0));
+    DataFrame cvt(data.size(), vector<int>(data[0].size() - 2, 0));
     int index = 2; // First Two Cols not necessary here
     int row = 0, col = 0;
 
@@ -100,10 +110,29 @@ class DecisionTree
 {
 public:
     TreeNode *root;
-    vector<vector<int>> Data;
+    DataFrame Data;
     vector<vector<string>> DataInString;
     vector<int> results;
-    // vector<vector<int>> colVals;
+    void Split_Data(int f, int c)
+    {
+        DataFrame Accepted;
+        DataFrame Rejected;
+        for (int i = 0; i < Data.size(); i++)
+        {
+            if (Data[i][f] == c)
+            {
+                Accepted.push_back(Data[i]);
+            }
+            else
+            {
+                Rejected.push_back(Data[i]);
+            }
+        }
+        // PrintData(Rejected);
+        cout << Rejected.size() << endl;
+        cout << Accepted.size() << endl;
+    }
+    // DataFrame colVals;
     DecisionTree(string filename)
     {
         // This Constructor Will Fetch The Data and convert to integers
@@ -155,28 +184,18 @@ public:
     }
 };
 
-template <class T>
-void PrintData(vector<vector<T>> &data)
-{
-    for (auto row : data)
-    {
-        for (auto num : row)
-        {
-            cout << num << ", ";
-        }
-        cout << endl;
-    }
-}
-
 int main(int argc, char const *argv[])
 {
-    DecisionTree DT("TEMP.csv");
-    vector<pair<int, int>> v = DT.CountResults(2); // -1 for overall and pass col index (0-4 from DATA(integers)) to get entropy of each attribute's attribute
-    for (auto n : v)
-    {
-        cout << DT.EntropyOfCol(n) << endl;
-        cout << n.first << ", " << n.second << endl;
-    }
+    DecisionTree DT("DS-data.csv");
+    vector<pair<int, int>> v = DT.CountResults(-1); // -1 for overall and pass col index (0-4 from DATA(integers)) to get entropy of each attribute's attribute
+    // PrintData(DT.Data);
+    // for (auto n : v)
+    // {
+    //     cout << DT.EntropyOfCol(n) << endl;
+    //     cout << n.first << ", " << n.second << endl;
+    // }
+    DT.Split_Data(0, 0);
+
     // Started 11/2/22
     // DT.Bit_Mask(DT.Data);
     // PrintData<int>(DT.Data);
