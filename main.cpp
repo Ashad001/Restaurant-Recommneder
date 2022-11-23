@@ -113,24 +113,21 @@ public:
     DataFrame Data;
     vector<vector<string>> DataInString;
     vector<int> results;
-    void Split_Data(int f, int c)
+    void Split_Data(DataFrame &tempData, int f, int c)
     {
         DataFrame Accepted;
         DataFrame Rejected;
-        for (int i = 0; i < Data.size(); i++)
+        for (int i = 0; i < tempData.size(); i++)
         {
-            if (Data[i][f] == c)
+            if (tempData[i][f] == c)
             {
-                Accepted.push_back(Data[i]);
+                Accepted.push_back(tempData[i]);
             }
             else
             {
-                Rejected.push_back(Data[i]);
+                Rejected.push_back(tempData[i]);
             }
         }
-        // PrintData(Rejected);
-        cout << Rejected.size() << endl;
-        cout << Accepted.size() << endl;
     }
     // DataFrame colVals;
     DecisionTree(string filename)
@@ -182,19 +179,58 @@ public:
         double ret = -1 * (double(p.first / total) * log2(double(p.first / total))) - 1 * (double(p.second / total) * log2(double(p.second / total)));
         return (isnan(ret)) ? 0 : ret;
     }
+    double ColGain(DataFrame &data, int index)
+    {
+        double TotalColEntropy = EntropyOfCol(CountResults(-1)[0]);
+        vector<double> cal;
+        vector<pair<int, int>> vp = CountResults(index);
+        for (auto n : vp)
+        {
+            int total = n.first + n.second;
+            double prob = (double)total / data.size();
+            cal.push_back(-1 * double(prob) * EntropyOfCol(n));
+        }
+        double ret = TotalColEntropy;
+        for (auto n : cal)
+        {
+            ret += n;
+        }
+        return ret;
+    }
+    double GetInfoGain(DataFrame &data)
+    {
+        vector<double> cal;
+        for (int i = 0; i <= 4; i++)
+        {
+            cal.push_back(ColGain(data, i));
+        }
+        double MaxRet = 0.f;
+        for (auto n : cal)
+        {
+            MaxRet = max(MaxRet, n);
+        }
+        return MaxRet;
+    }
 };
 
 int main(int argc, char const *argv[])
 {
     DecisionTree DT("DS-data.csv");
-    vector<pair<int, int>> v = DT.CountResults(-1); // -1 for overall and pass col index (0-4 from DATA(integers)) to get entropy of each attribute's attribute
-    // PrintData(DT.Data);
+    // vector<pair<int, int>> v = DT.CountResults(3); // -1 for overall and pass col index (0-4 from DATA(integers)) to get entropy of each attribute's attribute
     // for (auto n : v)
     // {
     //     cout << DT.EntropyOfCol(n) << endl;
     //     cout << n.first << ", " << n.second << endl;
     // }
-    DT.Split_Data(0, 0);
+    // cout << endl;
+    // cout << DT.ColGain(DT.Data, 3);
+    // for (int i = 0; i <= 4; i++)
+    // {
+    //     cout << DT.ColGain(DT.Data, i) << endl;
+    // }
+    cout << DT.GetInfoGain(DT.Data) << endl;
+    // PrintData(DT.Data);
+    // DT.Split_Data(DT.Data, 0, 0);
 
     // Started 11/2/22
     // DT.Bit_Mask(DT.Data);
