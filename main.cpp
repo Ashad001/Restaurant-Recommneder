@@ -8,7 +8,7 @@
 #include <sstream>
 #include <cmath>
 using namespace std;
-using DataFrame = vector<vector<int>>;
+using MATRIX = vector<vector<int>>;
 
 template <class T>
 void PrintData(vector<vector<T>> &data)
@@ -22,7 +22,7 @@ void PrintData(vector<vector<T>> &data)
         cout << endl;
     }
 }
-vector<pair<int, int>> CountResults(DataFrame &Data, vector<int> &results, int index)
+vector<pair<int, int>> CountResults(MATRIX &Data, vector<int> &results, int index)
 {
     vector<pair<int, int>> vp;
     int count0{0}, count1{0};
@@ -60,7 +60,7 @@ double EntropyOfCol(pair<int, int> p)
     double ret = -1 * (double(p.first / total) * log2(double(p.first / total))) - 1 * (double(p.second / total) * log2(double(p.second / total)));
     return (isnan(ret)) ? 0 : ret;
 }
-double ColGain(DataFrame &data, int index)
+double ColGain(MATRIX &data, int index)
 {
     double TotalColEntropy = EntropyOfCol(CountResults(data, data[0], -1)[0]);
     vector<double> cal;
@@ -78,7 +78,7 @@ double ColGain(DataFrame &data, int index)
     }
     return ret;
 }
-double GetInfoGain(DataFrame &data)
+double GetInfoGain(MATRIX &data)
 {
     if (data.size() == 0)
     {
@@ -96,7 +96,7 @@ double GetInfoGain(DataFrame &data)
     }
     return MaxRet;
 }
-vector<int> GetColumn(DataFrame &dataT, int col)
+vector<int> GetColumn(MATRIX &dataT, int col)
 {
     vector<int> ret;
     for (int i = 0; i < dataT.size(); i++)
@@ -117,13 +117,13 @@ public:
 class TreeNode
 {
 public:
-    DataFrame trainData;
+    MATRIX trainData;
     bestSplitValues bestSplit;
 
     TreeNode *leftChild;
     TreeNode *rightChild;
 
-    TreeNode(DataFrame &data)
+    TreeNode(MATRIX &data)
     {
         this->leftChild = this->rightChild = NULL;
         const vector<int> outputsBefore = data[0]; // Index 0
@@ -167,7 +167,7 @@ public:
         }
         return giniSum;
     }
-    static DataFrame GetSplitTargets(DataFrame &dataT, int feature, int category)
+    static MATRIX GetSplitTargets(MATRIX &dataT, int feature, int category)
     {
         vector<int> trueSplit;
         vector<int> falseSplit;
@@ -197,10 +197,10 @@ public:
         {
             falseOutComes.push_back(allOutcomes[i]);
         }
-        DataFrame ret{trueOutcomes, falseOutComes};
+        MATRIX ret{trueOutcomes, falseOutComes};
         return ret;
     }
-    static bestSplitValues GetBestSplit(DataFrame &dataT)
+    static bestSplitValues GetBestSplit(MATRIX &dataT)
     {
         vector<int> outputBef = dataT[0];
         float Entropy = GetGini(outputBef);
@@ -225,7 +225,7 @@ public:
             }
             for (int c = 0; c < count; c++) // MASLAAAA
             {
-                DataFrame split = GetSplitTargets(dataT, f, c);
+                MATRIX split = GetSplitTargets(dataT, f, c);
                 float trueEntropy = GetGini(split[0]);
                 float weightedTrueEntropy = trueEntropy * split[0].size() / outputBef.size(); /// MASLAAAAA
                 float falseEntropy = GetGini(split[1]);
@@ -282,10 +282,10 @@ bool isIdentical(string c, vector<string> &alreadyE)
     alreadyE.push_back(c);
     return false;
 }
-DataFrame Bit_Mask(vector<vector<string>> &data)
+MATRIX Bit_Mask(vector<vector<string>> &data)
 {
     // Converting string data to integers (AKA masking)
-    DataFrame cvt(data.size(), vector<int>(data[0].size() - 1, 0));
+    MATRIX cvt(data.size(), vector<int>(data[0].size() - 1, 0));
     int index = 1; // First Two Cols not necessary here
     int row = 0, col = 0;
 
@@ -309,11 +309,11 @@ DataFrame Bit_Mask(vector<vector<string>> &data)
     return cvt;
 }
 
-class TwoDataFrames
+class TwoMATRIXs
 {
 public:
-    DataFrame accepted;
-    DataFrame rejected;
+    MATRIX accepted;
+    MATRIX rejected;
 };
 
 class DecisionTree
@@ -322,10 +322,10 @@ public:
     TreeNode *root;
     vector<vector<string>> DataInString;
     vector<int> results;
-    // void Split_Data(DataFrame &tempData, int f, int c)
+    // void Split_Data(MATRIX &tempData, int f, int c)
     // {
-    //     DataFrame Accepted;
-    //     DataFrame Rejected;
+    //     MATRIX Accepted;
+    //     MATRIX Rejected;
     //     for (int i = 0; i < tempData.size(); i++)
     //     {
     //         if (tempData[i][f] == c)
@@ -338,12 +338,12 @@ public:
     //         }
     //     }
     // }
-    // DataFrame colVals;
+    // MATRIX colVals;
     DecisionTree(string filename)
     {
         // This Constructor Will Fetch The Data and convert to integers
         this->DataInString = RETRIEVE_DATA(filename);
-        DataFrame DataForTraining = Bit_Mask(DataInString);
+        MATRIX DataForTraining = Bit_Mask(DataInString);
         TreeNode *rootC = new TreeNode(DataForTraining);
         for (int i = 0; i < DataInString.size(); i++)
         {
@@ -363,7 +363,7 @@ public:
         cout << "(" << root->bestSplit.resEntropy << ", " << root->bestSplit.Feature << ", " << root->bestSplit.Category << " )" << endl;
         traverseTree(root->rightChild);
     }
-    static TwoDataFrames splitData(DataFrame &dataBefore, int feature, int category)
+    static TwoMATRIXs splitData(MATRIX &dataBefore, int feature, int category)
     {
         vector<int> presentSplit;
         vector<int> absentSplit;
@@ -382,7 +382,7 @@ public:
             index++;
         }
         int ROWS = dataBefore.size();
-        DataFrame presentData;
+        MATRIX presentData;
         vector<int> tempArr;
         for (int row; row < ROWS; row++)
         {
@@ -395,7 +395,7 @@ public:
             presentData.push_back(tempArr);
             tempArr.clear();
         }
-        DataFrame absentData;
+        MATRIX absentData;
         for (int row; row < ROWS; row++)
         {
             int i = 0;
@@ -407,7 +407,7 @@ public:
             absentData.push_back(tempArr);
             tempArr.clear();
         }
-        TwoDataFrames ret;
+        TwoMATRIXs ret;
         ret.accepted = presentData;
         ret.rejected = absentData;
         return ret;
@@ -419,7 +419,7 @@ public:
 
         if (node->bestSplit.resEntropy < giniBefore)
         {
-            TwoDataFrames children = DecisionTree::splitData(node->trainData, node->bestSplit.Feature, node->bestSplit.Category);
+            TwoMATRIXs children = DecisionTree::splitData(node->trainData, node->bestSplit.Feature, node->bestSplit.Category);
 
             if (children.accepted[0].size() > 0)
             {
@@ -435,7 +435,7 @@ public:
             }
         }
     }
-    vector<int> Predict(DataFrame &targets)
+    vector<int> Predict(MATRIX &targets)
     {
     }
     void DeleteChild(TreeNode *node)
@@ -475,7 +475,7 @@ int main(int argc, char const *argv[])
 {
     DecisionTree DT("DS-data.csv");
     vector<int> temp(1, 0);
-    DataFrame test;
+    MATRIX test;
     test.push_back(temp);
     cout << DT.recursivePredict(DT.root, temp);
     // DT.traverseTree(DT.root);
@@ -489,7 +489,7 @@ int main(int argc, char const *argv[])
     //     cout << endl;
     // }
 
-    // DataFrame dt = DT.root->GetSplitTargets(DT.Data, 3, 1);
+    // MATRIX dt = DT.root->GetSplitTargets(DT.Data, 3, 1);
     // DT.root->GetBestSplit(DT.Data);
     // PrintData(dt);
     // vector<pair<int, int>> v = DT.CountResults(3); // -1 for overall and pass col index (0-4 from DATA(integers)) to get entropy of each attribute's attribute
