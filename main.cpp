@@ -191,7 +191,7 @@ public:
         vector<int> trueOutcomes;
         for (auto i : trueSplit)
         {
-            trueSplit.push_back(allOutcomes[i]);
+            trueOutcomes.push_back(allOutcomes[i]);
         }
         for (auto i : falseSplit)
         {
@@ -227,7 +227,7 @@ public:
             {
                 MATRIX split = GetSplitTargets(dataT, f, c);
                 float trueEntropy = GetGini(split[0]);
-                float weightedTrueEntropy = trueEntropy * split[0].size() / outputBef.size(); /// MASLAAAAA
+                float weightedTrueEntropy = (float)trueEntropy * split[0].size() / outputBef.size(); /// MASLAAAAA
                 float falseEntropy = GetGini(split[1]);
                 float weightedFalseEntropy = falseEntropy * split[1].size() / outputBef.size();
 
@@ -350,7 +350,7 @@ public:
             results.push_back(stoi(DataInString[i][1]));
         }
         ConstructTree(root);
-        this->root = root;
+        this->root = rootC;
     }
 
     void traverseTree(TreeNode *root)
