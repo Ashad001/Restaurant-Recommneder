@@ -11,7 +11,17 @@ using namespace std;
 using MATRIX = vector<vector<int>>;
 
 template <class T>
-void PrintData(vector<vector<T>> &data)
+void PrintData1(vector<T> &data)
+{
+    for (auto num : data)
+    {
+        cout << num << ", ";
+    }
+    cout << endl;
+}
+
+template <class T>
+void PrintData2(vector<vector<T>> &data)
 {
     for (auto row : data)
     {
@@ -21,6 +31,17 @@ void PrintData(vector<vector<T>> &data)
         }
         cout << endl;
     }
+}
+bool IsInIt(vector<int> &d, int i)
+{
+    for (auto n : d)
+    {
+        if (i == n)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 class bestSplitValues
@@ -44,20 +65,21 @@ public:
     TreeNode(MATRIX &data)
     {
         this->leftChild = this->rightChild = NULL;
-        const vector<int> outputsBefore = data[0]; // Index 0
+        // const vector<int> outputsBefore = data[0]; // Index 0
         this->trainData = data;
-        this->bestSplit = GetBestSplit(data);
+        // this->bestSplit = GetBestSplit(data);
     }
-    static vector<pair<int, int>> CountResults(MATRIX &Data, vector<int> &results, int index)
+    vector<pair<int, int>> CountResults(MATRIX &Data, int index)
     {
         vector<pair<int, int>> vp;
         int count0{0}, count1{0};
-        if (index < 0)
+        if (index <= 0)
         {
-            for (int i = 0; i < results.size(); i++)
+            count0 = count1 = 0;
+            for (int i = 0; i < Data.size(); i++)
             {
-                count0 += (results[i] == 0) ? 1 : 0;
-                count1 += (results[i] == 1) ? 1 : 0;
+                count0 += (Data[i][0] == 0) ? 1 : 0;
+                count1 += (Data[i][0] == 1) ? 1 : 0;
             }
             vp.push_back({count1, count0});
         }
@@ -68,7 +90,7 @@ public:
             for (int i = 0; i < Data.size(); i++)
             {
                 countAll[Data[i][index]]++;
-                countLabels[Data[i][index]] += results[i];
+                countLabels[Data[i][index]] += Data[i][0];
             }
             for (auto i = countLabels.begin(), j = countAll.begin(); i != countLabels.end() && j != countAll.end(); i++, j++)
             {
@@ -79,59 +101,65 @@ public:
         }
         return vp;
     }
-    static double EntropyOfCol(pair<int, int> p)
+    double EntropyOfCol(pair<int, int> p)
     {
         double total = double(p.first + p.second);
         double ret = -1 * (double(p.first / total) * log2(double(p.first / total))) - 1 * (double(p.second / total) * log2(double(p.second / total)));
         return (isnan(ret)) ? 0 : ret;
     }
-    static double ColGain(MATRIX &data, int index)
+    float ColGain(MATRIX &data, int index)
     {
-        double TotalColEntropy = EntropyOfCol(CountResults(data, data[0], -1)[0]);
-        vector<double> cal;
-        vector<pair<int, int>> vp = CountResults(data, data[0], index);
+        float TotalColEntropy = EntropyOfCol(CountResults(data, 0)[0]);
+        if (index == 0)
+        {
+            return TotalColEntropy;
+        }
+        vector<float> cal;
+        vector<pair<int, int>> vp = CountResults(data, index);
         for (auto n : vp)
         {
             int total = n.first + n.second;
-            double prob = (double)total / data.size();
-            cal.push_back(-1 * double(prob) * EntropyOfCol(n));
+            float prob = (float)total / data.size();
+            cal.push_back(-1 * float(prob) * EntropyOfCol(n));
         }
-        double ret = TotalColEntropy;
+        float ret = TotalColEntropy;
         for (auto n : cal)
         {
             ret += n;
         }
         return ret;
     }
-    static pair<int, float> GetInfoGain(MATRIX &data)
+    pair<int, float> GetInfoGain(MATRIX &data)
     {
         if (data.size() == 0)
         {
             return {-1, 0.0f};
         }
         vector<float> cal;
-        for (int i = 0; i <= 4; i++)
+        map<int, float> calM;
+        int maxIndex = -1;
+
+        for (int i = 1; i <= data[0].size(); i++)
         {
-            if (*find(selectedFeature.begin(), selectedFeature.end(), i))
+            // if (TreeNode::selectedFeature.empty() || !IsInIt(TreeNode::selectedFeature, i))
+            // {
+            calM[i] = ColGain(data, i);
+            // }
+        }
+
+        float MaxRet = 0.f;
+        for (auto n : calM)
+        {
+            if (n.second > MaxRet)
             {
-                cal.push_back(ColGain(data, i));
+                MaxRet = n.second;
+                maxIndex = n.first;
             }
         }
-        int maxIndex = -1;
-        for (int i = 0; i < 3; i++)
-        {
-            maxIndex = (cal[i] > cal[i + 1]) ? i : i + 1;
-        }
-        TreeNode::selectedFeature.push_back(maxIndex);
-        float MaxRet = 0.f;
-        cout << maxIndex << ", " << MaxRet << endl;
-        for (auto n : cal)
-        {
-            MaxRet = max(MaxRet, n);
-        }
+        selectedFeature.push_back(maxIndex);
         return {maxIndex, MaxRet};
     }
-    static vector<int> GetColumn(MATRIX &dataT, int col)
+    vector<int> GetColumn(MATRIX &dataT, int col)
     {
         vector<int> ret;
         for (int i = 0; i < dataT.size(); i++)
@@ -140,93 +168,8 @@ public:
         }
         return ret;
     }
-    static float GetEntropy(MATRIX tempTrainData, vector<int> &outcomes)
-    {
-        if (outcomes.size() == 0)
-        {
-            return 0.0; // so that it doesn't divide by zero
-        }
-        return EntropyOfCol(CountResults(tempTrainData, outcomes, -1)[0]);
-    }
-
-    static MATRIX GetSplitTargets(MATRIX &dataT, int feature, int category)
-    {
-        vector<int> trueSplit;
-        vector<int> falseSplit;
-        int idx = 0;
-        for (auto i : dataT[feature])
-        {
-            // cout << i << endl;
-            int val = dataT[feature][idx];
-            if (val == category)
-            {
-                trueSplit.push_back(idx);
-            }
-            else
-            {
-                falseSplit.push_back(idx);
-            }
-            idx++;
-        }
-        vector<int> allOutcomes = dataT[0]; // Outcomes/Results/Targets...
-        vector<int> falseOutComes;
-        vector<int> trueOutcomes;
-        for (auto i : trueSplit)
-        {
-            trueOutcomes.push_back(allOutcomes[i]);
-        }
-        for (auto i : falseSplit)
-        {
-            falseOutComes.push_back(allOutcomes[i]);
-        }
-        MATRIX ret;
-        ret.push_back(trueOutcomes);
-        ret.push_back(falseOutComes);
-        return ret;
-    }
-    static bestSplitValues GetBestSplit(MATRIX &dataT)
-    {
-        // cout << " jsdf" << endl;
-        // vector<int> outputBef = dataT[0];
-        float Entropy = ColGain(dataT, 0);
-        int Features = dataT[0].size() - 1;
-        bestSplitValues bestChoice;
-        bestChoice.Category = bestChoice.Feature = bestChoice.resEntropy = 0;
-        int count{0};
-        int max_count = INT_MIN;
-        for (int f = 1; f < Features; f++)
-        {
-            count = 0;
-            vector<int> featureVec = GetColumn(dataT, f);
-            for (int i = 0; i < featureVec.size(); i++)
-            {
-                int j;
-                for (j = 0; j < i; j++)
-                    if (featureVec[i] == featureVec[j])
-                        break;
-                if (i == j)
-                    count++;
-            }
-            for (int c = 0; c < count; c++)
-            {
-                MATRIX split = GetSplitTargets(dataT, f, c);
-                float trueEntropy = ColGain(split, 0);
-                float weightedTrueEntropy = (float)trueEntropy * split[0].size() / dataT.size(); /// MASLAAAAA
-                float falseEntropy = ColGain(split, 1);
-                float weightedFalseEntropy = falseEntropy * split[1].size() / dataT.size();
-                float sum = weightedTrueEntropy + weightedFalseEntropy;
-                if (sum < bestChoice.resEntropy)
-                {
-                    bestChoice.resEntropy = sum;
-                    bestChoice.Feature = f;
-                    bestChoice.Category = c;
-                }
-            }
-        }
-        return bestChoice;
-    }
 };
-vector<int> TreeNode::selectedFeature = {0};
+vector<int> TreeNode::selectedFeature;
 
 bool isIdentical(string c, vector<string> &alreadyE)
 {
@@ -292,6 +235,33 @@ MATRIX Bit_Mask(vector<vector<string>> &data)
     }
     return cvt;
 }
+bool remove_column(MATRIX &a, int pos)
+{
+    bool success = pos < a[0].size();
+
+    if (success)
+    {
+        MATRIX temp(a.size(), vector<int>(a[0].size() - 1, 0));
+        vector<int> temp2;
+        for (int i = 0; i < a.size(); i++)
+        {
+            cout << "fhdsf";
+            for (int j = 0; j < a[0].size(); i++)
+            {
+                if (j != pos - 1)
+                    temp2.push_back(a[i][j]);
+            }
+            temp.push_back(temp2);
+        }
+        a.clear();
+        a.resize(temp.size(), vector<int>(temp[0].size() - 1));
+        for (int i = 0; i < temp.size(); i++)
+        {
+            a.push_back(temp[i]);
+        }
+    }
+    return success;
+}
 
 class TwoMatrix
 {
@@ -314,13 +284,55 @@ public:
         // ConstructTree(root);
         this->root = rootC;
     }
+    TwoMatrix Split_Data(MATRIX &tempData, int f)
+    {
+        MATRIX Accepted;
+        MATRIX Rejected;
+        for (int i = 0; i < tempData.size(); i++)
+        {
+            if (tempData[i][f] == 1)
+            {
+                Accepted.push_back(tempData[i]);
+            }
+            else
+            {
+                Rejected.push_back(tempData[i]);
+            }
+        }
+        TwoMatrix tw;
+        if (remove_column(Accepted, f) && remove_column(Rejected, f))
+        {
+            tw.accepted = Accepted;
+            tw.rejected = Rejected;
+        }
+        else
+        {
+            tw.accepted.clear();
+            tw.rejected.clear();
+        }
+        return tw;
+    }
 };
 
 int main(int argc, char const *argv[])
 {
-    DecisionTree DT("DS-data.csv");
-    bestSplitValues b = DT.root->bestSplit;
-    cout << b.resEntropy << ", " << b.Feature << ", " << b.Category << endl;
+    DecisionTree DT("TEMP.csv");
+    // bestSplitValues b = DT.root->bestSplit;
+    // cout << b.resEntropy << ", " << b.Feature << ", " << b.Category << endl;
+    // cout << DT.root->ColGain(DT.root->trainData, 4);
+    // cout << DT.root->GetInfoGain(DT.root->trainData).second;
+    // vector<pair<int, int>> v = DT.root->CountResults(DT.root->trainData, 1);
+    // for (auto n : v)
+    // {
+    //     cout << DT.root->ColGain(n) << endl;
+    //     // cout << n.first << ", " << n.second << endl;
+    // }
+    pair<int, float> fd = DT.root->GetInfoGain(DT.root->trainData);
+    cout << DT.root->GetInfoGain(DT.root->trainData).first << ", " << DT.root->GetInfoGain(DT.root->trainData).second << " ..." << endl;
 
-    return 0;
+    TwoMatrix newD = DT.Split_Data(DT.root->trainData, fd.first);
+    PrintData2(newD.accepted);
+    cout << DT.root->GetInfoGain(newD.accepted).first << ", " << DT.root->GetInfoGain(newD.accepted).second << " ..." << endl;
+    // cout << DT.root->GetInfoGain(DT.root->trainData).first << ", " << DT.root->GetInfoGain(DT.root->trainData).second << " ..." << endl;
+    // cout <<  DT.root->ColGain(DT.root->trainData, 0);
 }

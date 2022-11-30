@@ -1,7 +1,17 @@
-Ghalib,0,yes,above 5k,Desi,Lunch
-Ghalib,1,yes,below 5k,Desi,Breakfast
-Dunkin,1,no,below 5k,American,Breakfast 
+No Lies Fries,0,no,below 5k,American,Dinner
+Ghalib,1,yes,above 5k,Desi,Lunch
 Xander's,1,yes,below 5k,American,Lunch
 Xander's,0,yes,above 5k,American,Dinner
 Coconut Grove,1,yes,below 5k,Desi,Lunch
-Coconut Grove,1,yes,above 5k,Desi,Dinner
+Coconut Grove,0,yes,above 5k,Desi,Dinner
+SAGKH,1,no,below 5k,Desi,Dinner
+Dominos,1,no,below 5k,American,Lunch
+Dominos,1,no,below 5k,American,Dinner
+Al Kabab,1,no,below 5k,Desi,Dinner
+Lal Qila,0,yes,above 5k,Desi,Dinner
+Burger o'clock,0,no,below 5k,American,Lunch
+Burger o'clock,1,no,above 5k,American,Dinner
+Oh my Grill,1,no,below 5k,American,Lunch
+Oh my Grill,1,yes,above 5k,American,Dinner
+Aussies,1,no,above 5k,American,Lunch
+Aussies,1,no,below 5k,American,Dinner
