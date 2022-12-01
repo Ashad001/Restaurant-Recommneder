@@ -300,6 +300,7 @@ TwoMatrix Split_Data(MATRIX &tempData, int f)
     else
     {
         tw.accepted.clear();
+        tw.accepted.resize(0, vector<int>(0));
     }
     if (remove_column(Rejected, f))
     {
@@ -308,6 +309,7 @@ TwoMatrix Split_Data(MATRIX &tempData, int f)
     else
     {
         tw.rejected.clear();
+        tw.rejected.resize(0, vector<int>(0));
     }
     return tw;
 }
