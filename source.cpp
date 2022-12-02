@@ -249,7 +249,7 @@ bool remove_column(MATRIX &a, int pos)
             temp2.clear();
             for (int j = 0; j < a[0].size(); j++)
             {
-                if (j == pos - 1)
+                if (j == pos + 1)
                 {
                     continue;
                 }
@@ -347,7 +347,7 @@ int main(int argc, char const *argv[])
     pair<int, float> fd3 = DT.root->GetInfoGain(newD2.rejected);
     cout << fd3.first << ", " << fd3.second << " ..." << endl;
     cout << newD2.rejected.size() << endl;
-    ;
+
     // for (auto row : newD2.rejected)
     // {
     //     for (auto num : row)
