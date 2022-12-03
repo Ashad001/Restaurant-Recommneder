@@ -237,19 +237,17 @@ MATRIX Bit_Mask(vector<vector<string>> &data)
 }
 bool remove_column(MATRIX &a, int pos)
 {
-
     bool success = pos < a[0].size() && a.size() > 0;
-
     if (success)
     {
-        MATRIX temp(a.size(), vector<int>(a[0].size() - 1, 0));
-        vector<int> temp2(a[0].size() - 1);
+        MATRIX temp;
+        vector<int> temp2;
         for (int i = 0; i < a.size(); i++)
         {
             temp2.clear();
             for (int j = 0; j < a[0].size(); j++)
             {
-                if (j == pos + 1)
+                if (j + 1 == pos)
                 {
                     continue;
                 }
@@ -259,11 +257,17 @@ bool remove_column(MATRIX &a, int pos)
         }
         a.clear();
         a.resize(temp.size(), vector<int>(temp[0].size()));
+        // cout << temp.size() << ", " << temp[0].size() << endl;
         for (int i = 0; i < temp.size(); i++)
         {
-            a.push_back(temp[i]);
+            for (int j = 0; j < temp[0].size(); j++)
+            {
+                a[i][j] = temp[i][j];
+            }
         }
+        // cout << a.size() << endl;
     }
+
     else
     {
         a.clear();
@@ -284,12 +288,12 @@ TwoMatrix Split_Data(MATRIX &tempData, int f)
     MATRIX Rejected;
     Accepted.clear();
     Rejected.clear();
-    cout << tempData.size() << endl;
+    // cout << tempData.size() << endl;
     for (int i = 0; i < tempData.size(); i++)
     {
-        if (tempData[i][f] == 1)
+        if (tempData[i][f] == 0)
             Accepted.push_back(tempData[i]);
-        else if (tempData[i][f] == 0)
+        else if (tempData[i][f] == 1)
             Rejected.push_back(tempData[i]);
     }
     TwoMatrix tw;
@@ -311,6 +315,8 @@ TwoMatrix Split_Data(MATRIX &tempData, int f)
         tw.rejected.clear();
         tw.rejected.resize(0, vector<int>(0));
     }
+    // cout << Accepted.size() << ", " << Accepted[0].size() << endl;
+    // cout << Rejected.size() << ", " << Rejected[0].size() << endl;
     return tw;
 }
 
@@ -335,37 +341,30 @@ int main(int argc, char const *argv[])
     DecisionTree DT("TEMP.csv");
     pair<int, float> fd = DT.root->GetInfoGain(DT.root->trainData);
     cout << fd.first << ", " << fd.second << " ..." << endl;
+    PrintData2(DT.root->trainData);
 
-    TwoMatrix newD = Split_Data(DT.root->trainData, fd.first);
-    pair<int, float> fd2 = DT.root->GetInfoGain(newD.rejected);
+    TwoMatrix SP1 = Split_Data(DT.root->trainData, fd.first);
+    pair<int, float> fd2 = DT.root->GetInfoGain(SP1.accepted);
     cout << fd2.first << ", " << fd2.second << " ..." << endl;
-    cout << endl;
-    DT.root->leftChild->trainData = newD.accepted;
-    DT.root->rightChild->trainData = newD.rejected;
+    PrintData2(SP1.accepted);
 
-    TwoMatrix newD2 = Split_Data(DT.root->rightChild->trainData, fd2.first);
-    pair<int, float> fd3 = DT.root->GetInfoGain(newD2.rejected);
+    TwoMatrix SP2 = Split_Data(SP1.accepted, fd2.first);
+    pair<int, float> fd3 = DT.root->GetInfoGain(SP2.accepted);
     cout << fd3.first << ", " << fd3.second << " ..." << endl;
-    cout << newD2.rejected.size() << endl;
+    PrintData2(SP2.accepted);
 
-    // for (auto row : newD2.rejected)
-    // {
-    //     for (auto num : row)
-    //     {
-    //         cout << num << ", ";
-    //     }
-    //     cout << endl;
-    // }
-    DT.root->leftChild->leftChild->trainData = newD2.accepted;
-    DT.root->leftChild->rightChild->trainData = newD2.accepted;
+    TwoMatrix SP3 = Split_Data(SP2.accepted, fd2.first);
+    pair<int, float> fd4 = DT.root->GetInfoGain(SP3.accepted);
+    cout << fd4.first << ", " << fd4.second << " ..." << endl;
+    PrintData2(SP3.accepted);
 
-    TwoMatrix newD3 = Split_Data(DT.root->leftChild->rightChild->trainData, fd3.first);
-    pair<int, float> fd4 = DT.root->GetInfoGain(newD3.rejected);
-    // cout << fd4.first << ", " << fd4.second << " ..." << endl;
+    TwoMatrix SP4 = Split_Data(SP3.accepted, fd4.first);
+    pair<int, float> fd5 = DT.root->GetInfoGain(SP4.accepted);
+    cout << fd4.first << ", " << fd4.second << " ..." << endl;
+    PrintData2(SP4.accepted);
 
-    // TwoMatrix newD4 = Split_Data(newD3.accepted, fd4.first);
-    // pair<int, float> fd5 = DT.root->GetInfoGain(newD4.accepted);
-    // cout << fd5.first << ", " << fd5.second << " ..." << endl;
+    // (-1 , 0) means the data is running out and we might end up with leaf!
+    // Program crashes sometimes ... probably when the data is alot left and columns are excluded
 
     // PrintData2(newD2.accepted);
     // PrintData2(newD2.accepted);
