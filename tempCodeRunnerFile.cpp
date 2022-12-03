@@ -1,5 +1,3 @@
-
-    for (int i = 0; i <= 4; i++)
-    {
-        cout << DT.ColGain(DT.Data, i) << endl;
-    }
+    PrintData2(children.accepted);
+            cout << endl;
+            PrintData2(children.rejected);

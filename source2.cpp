@@ -66,7 +66,9 @@ public:
         this->leftChild = this->rightChild = NULL;
         // const vector<int> outputsBefore = data[0]; // Index 0
         this->trainData = data;
-        // this->bestSplit = GetBestSplit(data);
+        pair<int, float> r = GetInfoGain(trainData);
+        this->bestSplit.Feature = r.first;
+        this->bestSplit.resEntropy = r.second;
     }
     vector<pair<int, int>> CountResults(MATRIX &Data, int index)
     {
@@ -336,7 +338,7 @@ public:
         rootC->bestSplit.Feature = r.first;
         rootC->bestSplit.resEntropy = r.second;
         this->root = rootC;
-        TrainData();
+        ConstructTree(root);
     }
     TreeNode *construct(TreeNode *node)
     {
@@ -368,29 +370,12 @@ public:
         }
         return node;
     }
-    TreeNode *selecting_left(TreeNode *node, MATRIX &data)
-    {
-        if (data.size() > 0)
-        {
-            TreeNode *leftNode = new TreeNode(data);
-            pair<int, float> r = leftNode->GetInfoGain(data);
-            leftNode->bestSplit.Feature = r.first;
-            leftNode->bestSplit.resEntropy = r.second;
-            node->leftChild = leftNode;
-            // SP = Split_Data(root->trainData, r.first);
-            // node = node->leftChild;
-        }
-        else
-        {
-            node->leftChild = NULL;
-        }
-        return node;
-    }
+
     static void ConstructTree(TreeNode *node)
     {
         pair<int, float> infoBefore = node->GetInfoGain(node->trainData);
 
-        if (node->bestSplit.resEntropy < infoBefore.second)
+        if (node->bestSplit.Feature > 0 && node->bestSplit.resEntropy > 0.f)
         {
             TwoMatrix children = Split_Data(node->trainData, node->bestSplit.Feature);
             PrintData2(children.accepted);
@@ -399,38 +384,35 @@ public:
             if (children.accepted.size() > 0)
             {
                 TreeNode *rightChild = new TreeNode(children.accepted);
-                rightChild->bestSplit.Feature = infoBefore.first;
-                rightChild->bestSplit.resEntropy = infoBefore.second;
                 node->rightChild = rightChild;
                 DecisionTree::ConstructTree(node->rightChild);
             }
             if (children.rejected.size() > 0)
             {
                 TreeNode *leftChild = new TreeNode(children.rejected);
-                leftChild->bestSplit.Feature = infoBefore.first;
-                leftChild->bestSplit.resEntropy = infoBefore.second;
                 node->leftChild = leftChild;
                 DecisionTree::ConstructTree(node->leftChild);
             }
         }
     }
-    TreeNode *selecting_right(TreeNode *node, MATRIX &data)
+    static int recursivePredict(TreeNode *node, vector<int> targets)
     {
-        if (data.size() > 0)
+        int obsCat = targets[node->bestSplit.Feature];
+        int predict = -1;
+        if (node->leftChild == NULL && (node->rightChild == NULL))
         {
-            TreeNode *rightNode = new TreeNode(data);
-            pair<int, float> r = rightNode->GetInfoGain(data);
-            rightNode->bestSplit.Feature = r.first;
-            rightNode->bestSplit.resEntropy = r.second;
-            node->rightChild = rightNode;
-            // SP = Split_Data(root->trainData, r.first);
-            // node = node->leftChild;
+            // THIS IS A LEAF NODE :: THE OUTCOME
+            predict = (node->trainData)[0][0];
+        }
+        else if (obsCat == 0)
+        {
+            predict = DecisionTree::recursivePredict(node->rightChild, targets);
         }
         else
         {
-            node->rightChild = NULL;
+            predict = DecisionTree::recursivePredict(node->leftChild, targets);
         }
-        return node;
+        return predict;
     }
     void TrainData()
     {
@@ -496,6 +478,8 @@ int main(int argc, char const *argv[])
     // DT.TrainData();
     // cout << " jfsdf" << endl;
     DT.InOrder(DT.root);
+    vector<int> ans = {1, 0, 0, 0};
+    cout << DT.recursivePredict(DT.root, ans) << endl;
     // pair<int, float> fd = DT.root->GetInfoGain(DT.root->trainData);
     // cout << fd.first << ", " << fd.second << " ..." << endl;
     // PrintData2(DT.root->trainData);
