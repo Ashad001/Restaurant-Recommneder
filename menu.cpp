@@ -25,7 +25,7 @@ string userbudget,userreserv,usertiming,usercuisine;
 
 int main()
 {
-	
+	system("cls");
 	loader();
     loadname();
     ccolor(15);   
