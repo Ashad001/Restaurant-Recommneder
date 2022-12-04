@@ -36,17 +36,7 @@ void PrintData2(vector<vector<T>> &data)
         cout << endl;
     }
 }
-bool IsInIt(vector<int> &d, int i)
-{
-    for (auto n : d)
-    {
-        if (i == n)
-        {
-            return true;
-        }
-    }
-    return false;
-}
+
 
 class bestSplitValues
 {
@@ -349,33 +339,6 @@ public:
         this->root = rootC;
         ConstructTree(root);
     }
-    TreeNode *construct(TreeNode *node)
-    {
-        pair<int, float> infoBefore = node->GetInfoGain(node->trainData);
-
-        if (node->bestSplit.Feature > 0)
-        {
-            // cout << node->bestSplit.Feature << endl;
-            TwoMatrix children = Split_Data(node->trainData, node->bestSplit.Feature);
-            if (children.accepted.size() > 0)
-            {
-                TreeNode *rightChild = new TreeNode(children.accepted);
-                rightChild->bestSplit.Feature = infoBefore.first;
-                rightChild->bestSplit.resEntropy = infoBefore.second;
-                node->rightChild = rightChild;
-                node->rightChild = DecisionTree::construct(node->rightChild);
-            }
-            if (children.rejected.size() > 0)
-            {
-                TreeNode *leftChild = new TreeNode(children.rejected);
-                leftChild->bestSplit.Feature = infoBefore.first;
-                leftChild->bestSplit.resEntropy = infoBefore.second;
-                node->leftChild = leftChild;
-                node->leftChild = DecisionTree::construct(node->leftChild);
-            }
-        }
-        return node;
-    }
 
     static void ConstructTree(TreeNode *node)
     {
@@ -398,7 +361,7 @@ public:
             }
         }
     }
-    static int recursivePredict(TreeNode *node, vector<int> targets)
+    static int Predicts(TreeNode *node, vector<int> targets)
     {
         int obsCat = targets[node->bestSplit.Feature];
         int predict = -1;
@@ -409,17 +372,13 @@ public:
         }
         else if (obsCat == 0)
         {
-            predict = DecisionTree::recursivePredict(node->rightChild, targets);
+            predict = DecisionTree::Predicts(node->rightChild, targets);
         }
         else
         {
-            predict = DecisionTree::recursivePredict(node->leftChild, targets);
+            predict = DecisionTree::Predicts(node->leftChild, targets);
         }
         return predict;
-    }
-    void TrainData()
-    {
-        this->root = construct(root);
     }
     void InOrder(TreeNode *p)
     {
@@ -839,7 +798,7 @@ void menu::budgetmenu()
                 // cout << userbudget << userreserv << usertiming << usercuisine << endl;
                 // DT.InOrder(DT.root);
                 vector<int> ans = {userreserv, userbudget, usercuisine, usertiming}; // userinput yahan par string mai kaisay ayega?
-                predict = DT.recursivePredict(DT.root, ans);
+                predict = DT.Predicts(DT.root, ans);
                 running = false;
                 break;
             }
@@ -854,7 +813,7 @@ void menu::budgetmenu()
                 // cout << userbudget << userreserv << usertiming << usercuisine << endl;
                 // DT.InOrder(DT.root);
                 vector<int> ans = {userreserv, userbudget, usercuisine, usertiming}; // userinput yahan par string mai kaisay ayega?
-                predict = DT.recursivePredict(DT.root, ans);
+                predict = DT.Predicts(DT.root, ans);
                 running = false;
                 break;
             }
