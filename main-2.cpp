@@ -1,7 +1,7 @@
 #include <iostream>
 #include <windows.h> // for sleep()
 #include <conio.h>
-#include <cstdlib>
+// #include <cstdlib>
 #include <map>
 #include <string>
 #include <vector>
@@ -270,7 +270,6 @@ bool remove_column(MATRIX &a, int pos)
         }
         a.clear();
         a.resize(temp.size(), vector<int>(temp[0].size()));
-        // cout << temp.size() << ", " << temp[0].size() << endl;
         for (int i = 0; i < temp.size(); i++)
         {
             for (int j = 0; j < temp[0].size(); j++)
@@ -278,7 +277,6 @@ bool remove_column(MATRIX &a, int pos)
                 a[i][j] = temp[i][j];
             }
         }
-        // cout << a.size() << endl;
     }
 
     else
@@ -357,11 +355,8 @@ public:
 
         if (node->bestSplit.Feature > 0)
         {
-            cout << node->bestSplit.Feature << endl;
+            // cout << node->bestSplit.Feature << endl;
             TwoMatrix children = Split_Data(node->trainData, node->bestSplit.Feature);
-            PrintData2(children.accepted);
-            cout << endl;
-            PrintData2(children.rejected);
             if (children.accepted.size() > 0)
             {
                 TreeNode *rightChild = new TreeNode(children.accepted);
@@ -389,9 +384,6 @@ public:
         if (node->bestSplit.Feature > 0 && node->bestSplit.resEntropy > 0.f)
         {
             TwoMatrix children = Split_Data(node->trainData, node->bestSplit.Feature);
-            PrintData2(children.accepted);
-            cout << endl;
-            PrintData2(children.rejected);
             if (children.accepted.size() > 0)
             {
                 TreeNode *rightChild = new TreeNode(children.accepted);
@@ -829,6 +821,7 @@ void menu::budgetmenu()
             continue;
         }
 
+        int predict = -1;
         if (GetAsyncKeyState(VK_RETURN))
         { // Enter key pressed
 
@@ -843,10 +836,10 @@ void menu::budgetmenu()
                 gotoXY(20, 21);
                 DecisionTree DT("TEMP.csv");
                 system("cls");
-                cout << userbudget << userreserv << usertiming << usercuisine<<endl;
-                DT.InOrder(DT.root);
-                vector<int> ans = {userreserv, userbudget, usercuisine, usertiming}; // userinput yahan par string mai kaisay ayega?
-                cout << DT.recursivePredict(DT.root, ans) << endl;
+                cout << userbudget << userreserv << usertiming << usercuisine << endl;
+                // DT.InOrder(DT.root);
+                // vector<int> ans = {userreserv, userbudget, usercuisine, usertiming}; // userinput yahan par string mai kaisay ayega?
+                predict = DT.recursivePredict(DT.root, ans);
                 running = false;
                 break;
             }
@@ -858,10 +851,10 @@ void menu::budgetmenu()
                 gotoXY(20, 21);
                 DecisionTree DT("TEMP.csv");
                 system("cls");
-                cout << userbudget << userreserv << usertiming << usercuisine<<endl;
-                DT.InOrder(DT.root);
+                // cout << userbudget << userreserv << usertiming << usercuisine << endl;
+                // DT.InOrder(DT.root);
                 vector<int> ans = {userreserv, userbudget, usercuisine, usertiming}; // userinput yahan par string mai kaisay ayega?
-                cout << DT.recursivePredict(DT.root, ans) << endl;
+                predict = DT.recursivePredict(DT.root, ans);
                 running = false;
                 break;
             }
@@ -873,6 +866,18 @@ void menu::budgetmenu()
                 mainmenu();
                 break;
             }
+            }
+            if (predict == 0)
+            {
+                cout << "Restaurant is not recommended! " << endl;
+            }
+            else if (predict == 1)
+            {
+                cout << "Restaurant is recommended. you are good to go!" << endl;
+            }
+            else
+            {
+                cout << "out of order " << endl;
             }
         }
     }
@@ -894,6 +899,7 @@ void menu::reservmenu()
         gotoXY(47, 7);
         cout << "1) Yes";
         gotoXY(47, 8);
+
         cout << "2) No";
         gotoXY(47, 9);
         cout << "3) Go Back To Main Menu";
@@ -932,6 +938,7 @@ void menu::reservmenu()
             {
                 system("cls");
                 dname();
+                userreserv = 1;
                 timingmenu();
                 running = false;
                 break;
@@ -940,7 +947,7 @@ void menu::reservmenu()
             {
                 system("cls");
                 dname();
-                userreserv = 1;
+                userreserv = 0;
                 timingmenu();
                 running = false;
                 break;
@@ -950,7 +957,6 @@ void menu::reservmenu()
                 running = false;
                 system("cls");
                 dname();
-                userreserv = 0;
                 mainmenu();
                 break;
             }
