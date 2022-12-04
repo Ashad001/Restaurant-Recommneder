@@ -27,15 +27,13 @@ int main()
 {
 	system("cls");
 	loader();
-    loadname();
-    ccolor(15);   
-    cout<<endl<<endl;
-	showcredits(); 
+    	ccolor(15);   
+    	cout<<endl<<endl; 
 	system("cls");
 	dname();  
-    userinput();
+    	userinput();
 
-    return 0;
+    	return 0;
 }
 
 
@@ -71,51 +69,70 @@ void userinput(){
 	mainmenu();
 }
 void loadques(){
-	Sleep(100);;
-		std::cout << "\bJ" << std::flush;Sleep(100);;std::cout << "u" << std::flush;Sleep(100);;
-		std::cout << "s" << std::flush;Sleep(100);;std::cout << "t" << std::flush;
-        Sleep(100);;std::cout << " ";std::cout << "A" << std::flush;Sleep(100);
-		std::cout << "n" << std::flush;Sleep(100);;std::cout << "s" << std::flush;
-		Sleep(100);;std::cout << "w" << std::flush;Sleep(100);;std::cout << "e" << std::flush;Sleep(100);;std::cout << "r" << std::flush;
-        Sleep(100);;std::cout << " ";std::cout << "A" << std::flush;Sleep(100);;std::cout << " ";
-		std::cout << "F" << std::flush;Sleep(100);;std::cout << "e" << std::flush;Sleep(100);;std::cout << "w" << std::flush;
-        std::cout << " ";Sleep(100);;std::cout << "Q" << std::flush;Sleep(100);;std::cout << "u" << std::flush;
-		Sleep(100);;std::cout << "e" << std::flush;Sleep(100);;std::cout << "s" << std::flush;Sleep(100);;
-		std::cout << "t" << std::flush;Sleep(100);;std::cout << "i" << std::flush;Sleep(100);;
-		std::cout << "o" << std::flush;Sleep(100);;std::cout << "n" << std::flush;Sleep(100);;std::cout << "s" << std::flush;
-		Sleep(100);;std::cout << " ";std::cout << "A" << std::flush;Sleep(100);std::cout << "n" << std::flush;Sleep(100);;
-		std::cout << "d" << std::flush;std::cout << " ";Sleep(100);;std::cout << "W" << std::flush;
-		std::cout << "e" << std::flush;Sleep(100);;std::cout << " W" << std::flush;Sleep(100);;
-		std::cout << "i" << std::flush;Sleep(100);;std::cout << "l" << std::flush;
-        Sleep(100);;std::cout << "l";std::cout << " P" << std::flush;Sleep(100);
-		std::cout << "i" << std::flush;Sleep(100);;std::cout << "c" << std::flush;
-		Sleep(100);;std::cout << "k" << std::flush;Sleep(100);;std::cout << " O" << std::flush;Sleep(100);;std::cout << "u" << std::flush;
-        Sleep(100);;std::cout <<"t";std::cout << " T" << std::flush;Sleep(100);;std::cout << "h";
-		std::cout << "e" << std::flush;Sleep(100);;std::cout << " P" << std::flush;Sleep(100);;std::cout << "e" << std::flush;
-        std::cout << "r";Sleep(100);;std::cout << "f" << std::flush;Sleep(100);;std::cout << "e" << std::flush;
-		Sleep(100);;std::cout << "c" << std::flush;Sleep(100);;std::cout << "t" << std::flush;Sleep(100);;
-		std::cout << " R";std::cout << "e" << std::flush;Sleep(100);;std::cout << "s" << std::flush;Sleep(100);;
-		std::cout << "t" << std::flush;Sleep(100);;std::cout << "a" << std::flush;Sleep(100);;std::cout << "u" << std::flush;
-		Sleep(100);;std::cout << "r" << std::flush;Sleep(100);;std::cout <<"a";
-        std::cout << "n" << std::flush; Sleep(100);;std::cout << "t";std::cout << " F" << std::flush;Sleep(100);;
-		std::cout << "o" << std::flush;Sleep(100);;std::cout << "r" << std::flush;std::cout << " Y" << std::flush;Sleep(100);;
-		std::cout << "o" << std::flush;Sleep(100);;std::cout << "u" << std::flush;Sleep(100);;
-		std::cout << " !" << std::flush;Sleep(100);;std::cout << "!" << std::flush;
+	Sleep(50);;
+		std::cout << "\bJ" << std::flush;Sleep(50);;std::cout << "u" << std::flush;Sleep(50);;
+		std::cout << "s" << std::flush;Sleep(50);;std::cout << "t" << std::flush;
+        Sleep(50);;std::cout << " ";std::cout << "A" << std::flush;Sleep(50);
+		std::cout << "n" << std::flush;Sleep(50);;std::cout << "s" << std::flush;
+		Sleep(50);;std::cout << "w" << std::flush;Sleep(50);;std::cout << "e" << std::flush;Sleep(50);;std::cout << "r" << std::flush;
+        Sleep(50);;std::cout << " ";std::cout << "A" << std::flush;Sleep(50);;std::cout << " ";
+		std::cout << "F" << std::flush;Sleep(50);;std::cout << "e" << std::flush;Sleep(50);;std::cout << "w" << std::flush;
+        std::cout << " ";Sleep(50);;std::cout << "Q" << std::flush;Sleep(50);;std::cout << "u" << std::flush;
+		Sleep(50);;std::cout << "e" << std::flush;Sleep(50);;std::cout << "s" << std::flush;Sleep(50);;
+		std::cout << "t" << std::flush;Sleep(50);;std::cout << "i" << std::flush;Sleep(50);;
+		std::cout << "o" << std::flush;Sleep(50);;std::cout << "n" << std::flush;Sleep(50);;std::cout << "s" << std::flush;
+		Sleep(50);;std::cout << " ";std::cout << "A" << std::flush;Sleep(50);std::cout << "n" << std::flush;Sleep(50);;
+		std::cout << "d" << std::flush;std::cout << " ";Sleep(50);;std::cout << "W" << std::flush;
+		std::cout << "e" << std::flush;Sleep(50);;std::cout << " W" << std::flush;Sleep(50);;
+		std::cout << "i" << std::flush;Sleep(50);;std::cout << "l" << std::flush;
+        Sleep(50);;std::cout << "l";std::cout << " P" << std::flush;Sleep(50);
+		std::cout << "i" << std::flush;Sleep(50);;std::cout << "c" << std::flush;
+		Sleep(50);;std::cout << "k" << std::flush;Sleep(50);;std::cout << " O" << std::flush;Sleep(50);;std::cout << "u" << std::flush;
+        Sleep(50);;std::cout <<"t";std::cout << " T" << std::flush;Sleep(50);;std::cout << "h";
+		std::cout << "e" << std::flush;Sleep(50);;std::cout << " P" << std::flush;Sleep(50);;std::cout << "e" << std::flush;
+        std::cout << "r";Sleep(50);;std::cout << "f" << std::flush;Sleep(50);;std::cout << "e" << std::flush;
+		Sleep(50);;std::cout << "c" << std::flush;Sleep(50);;std::cout << "t" << std::flush;Sleep(50);;
+		std::cout << " R";std::cout << "e" << std::flush;Sleep(50);;std::cout << "s" << std::flush;Sleep(50);;
+		std::cout << "t" << std::flush;Sleep(50);;std::cout << "a" << std::flush;Sleep(50);;std::cout << "u" << std::flush;
+		Sleep(50);;std::cout << "r" << std::flush;Sleep(50);;std::cout <<"a";
+        std::cout << "n" << std::flush; Sleep(50);;std::cout << "t";std::cout << " F" << std::flush;Sleep(50);;
+		std::cout << "o" << std::flush;Sleep(50);;std::cout << "r" << std::flush;std::cout << " Y" << std::flush;Sleep(50);;
+		std::cout << "o" << std::flush;Sleep(50);;std::cout << "u" << std::flush;Sleep(50);;
+		std::cout << " !" << std::flush;Sleep(50);;std::cout << "!" << std::flush;
 		
 }
 void loader(){
-	ccolor(64);
-    std::cout << '-' << std::flush;
-    for (int i=0;i<20;i++) {
-        Sleep(10);
-        std::cout << "\b\\" << std::flush;
-        Sleep(10);
-        std::cout << "\b|" << std::flush;
-        Sleep(10);
-        std::cout << "\b/" << std::flush;
-        Sleep(10);
-        std::cout << "\b-" << std::flush;
+	ccolor(4);
+	gotoXY(59,7);
+    std::cout << 'D' << std::flush;
+    for (int i=0;i<2;i++) {
+        Sleep(100);
+        std::cout << "\b" << std::flush;
+        gotoXY(63,9);
+        std::cout << "E" << std::flush;
+        Sleep(100);
+        std::cout << "\b" << std::flush;
+        gotoXY(61,11);
+        std::cout << "L" << std::flush;
+        std::cout << "\b" << std::flush;
+        gotoXY(59,13);
+        Sleep(100);
+        std::cout << "I" << std::flush;
+        std::cout << "\b" << std::flush;
+        gotoXY(57,11);
+        Sleep(100);
+        std::cout << "S" << std::flush;
+        std::cout << "\b" << std::flush;
+        gotoXY(55,9);
+        Sleep(100);
+        std::cout << "H" << std::flush;
     }
+    system("cls");
+    	gotoXY(45,9);
+    	loadname();
+    	gotoXY(48,11);
+		showcredits();
+        system("cls");
 ccolor(4);
    
 
