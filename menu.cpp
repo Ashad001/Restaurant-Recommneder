@@ -7,6 +7,7 @@ COORD CursorPosition; // used for goto
 
 
 using namespace std;
+void loadques();
 void loadname();
 void loader();
 void ccolor(int);
@@ -20,6 +21,8 @@ void reservmenu();
 void budgetmenu();
 void cuisinemenu();
 string userbudget,userreserv,usertiming,usercuisine;
+
+
 int main()
 {
 	
@@ -34,6 +37,8 @@ int main()
 
     return 0;
 }
+
+
 void gotoXY(int x, int y) 
 { 
 	CursorPosition.X = x; 
@@ -58,14 +63,48 @@ void userinput(){
 	Sleep(1000);
 	system("cls");
 	dname();
-	cout<<endl<<endl<<"\t\tJust Answer A Few Questions And We Will Pick Out The Perfect Restraunt For You !!";
-	Sleep(5000);
+	cout<<endl<<endl<<"\t\t";
+	loadques();
+	Sleep(500);
 	system("cls");
 	dname();
 	mainmenu();
 }
+void loadques(){
+	Sleep(100);;
+		std::cout << "\bJ" << std::flush;Sleep(100);;std::cout << "u" << std::flush;Sleep(100);;
+		std::cout << "s" << std::flush;Sleep(100);;std::cout << "t" << std::flush;
+        Sleep(100);;std::cout << " ";std::cout << "A" << std::flush;Sleep(100);
+		std::cout << "n" << std::flush;Sleep(100);;std::cout << "s" << std::flush;
+		Sleep(100);;std::cout << "w" << std::flush;Sleep(100);;std::cout << "e" << std::flush;Sleep(100);;std::cout << "r" << std::flush;
+        Sleep(100);;std::cout << " ";std::cout << "A" << std::flush;Sleep(100);;std::cout << " ";
+		std::cout << "F" << std::flush;Sleep(100);;std::cout << "e" << std::flush;Sleep(100);;std::cout << "w" << std::flush;
+        std::cout << " ";Sleep(100);;std::cout << "Q" << std::flush;Sleep(100);;std::cout << "u" << std::flush;
+		Sleep(100);;std::cout << "e" << std::flush;Sleep(100);;std::cout << "s" << std::flush;Sleep(100);;
+		std::cout << "t" << std::flush;Sleep(100);;std::cout << "i" << std::flush;Sleep(100);;
+		std::cout << "o" << std::flush;Sleep(100);;std::cout << "n" << std::flush;Sleep(100);;std::cout << "s" << std::flush;
+		Sleep(100);;std::cout << " ";std::cout << "A" << std::flush;Sleep(100);std::cout << "n" << std::flush;Sleep(100);;
+		std::cout << "d" << std::flush;std::cout << " ";Sleep(100);;std::cout << "W" << std::flush;
+		std::cout << "e" << std::flush;Sleep(100);;std::cout << " W" << std::flush;Sleep(100);;
+		std::cout << "i" << std::flush;Sleep(100);;std::cout << "l" << std::flush;
+        Sleep(100);;std::cout << "l";std::cout << " P" << std::flush;Sleep(100);
+		std::cout << "i" << std::flush;Sleep(100);;std::cout << "c" << std::flush;
+		Sleep(100);;std::cout << "k" << std::flush;Sleep(100);;std::cout << " O" << std::flush;Sleep(100);;std::cout << "u" << std::flush;
+        Sleep(100);;std::cout <<"t";std::cout << " T" << std::flush;Sleep(100);;std::cout << "h";
+		std::cout << "e" << std::flush;Sleep(100);;std::cout << " P" << std::flush;Sleep(100);;std::cout << "e" << std::flush;
+        std::cout << "r";Sleep(100);;std::cout << "f" << std::flush;Sleep(100);;std::cout << "e" << std::flush;
+		Sleep(100);;std::cout << "c" << std::flush;Sleep(100);;std::cout << "t" << std::flush;Sleep(100);;
+		std::cout << " R";std::cout << "e" << std::flush;Sleep(100);;std::cout << "s" << std::flush;Sleep(100);;
+		std::cout << "t" << std::flush;Sleep(100);;std::cout << "a" << std::flush;Sleep(100);;std::cout << "u" << std::flush;
+		Sleep(100);;std::cout << "r" << std::flush;Sleep(100);;std::cout <<"a";
+        std::cout << "n" << std::flush; Sleep(100);;std::cout << "t";std::cout << " F" << std::flush;Sleep(100);;
+		std::cout << "o" << std::flush;Sleep(100);;std::cout << "r" << std::flush;std::cout << " Y" << std::flush;Sleep(100);;
+		std::cout << "o" << std::flush;Sleep(100);;std::cout << "u" << std::flush;Sleep(100);;
+		std::cout << " !" << std::flush;Sleep(100);;std::cout << "!" << std::flush;
+		
+}
 void loader(){
-	ccolor(26);
+	ccolor(64);
     std::cout << '-' << std::flush;
     for (int i=0;i<20;i++) {
         Sleep(10);
@@ -117,15 +156,15 @@ void showcredits() {
 	cout<<"by ";
 	ccolor(10);
 	cout << "Ashad";
-	Sleep(1000);;
+	Sleep(500);;
 	cout<<" ";
 	ccolor(12);
 	cout << "Haseeb";
-	Sleep(1000);;
+	Sleep(500);;
 	cout<<" ";
 	ccolor(14);
 	cout << "Tahir";
-	Sleep(1000);;
+	Sleep(500);;
 	ccolor(15);
 }
 void budgetmenu(){
@@ -429,7 +468,7 @@ void mainmenu(){
 	
 	while(running)
 	{
-        gotoXY(47,7);  cout << "1) Find A Resturaunt !";
+        gotoXY(47,7);  cout << "1) Find A Restaurant !";
 		gotoXY(47,8); cout << "2) Quit Program";
 
 		system("pause>nul"); // the >nul bit causes it the print no message
@@ -463,11 +502,11 @@ void mainmenu(){
 				case 0: {
 					
 					gotoXY(47,16);
-					cout << "Finding Restraunts !";
+					cout << "Finding Restaurants !";
 					Sleep(100);
 					cout<<" \b.";
 					for(int i=0;i<3;i++){
-					Sleep(100);
+					Sleep(400);
 					cout<<" \b.";
 					}
 					system("cls");
