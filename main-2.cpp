@@ -13,7 +13,7 @@
 using namespace std;
 using MATRIX = vector<vector<int>>;
 HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE); // used for goto
-COORD CursorPosition; // used for goto
+COORD CursorPosition;                             // used for goto
 template <class T>
 void PrintData1(vector<T> &data)
 {
@@ -189,65 +189,64 @@ bool isIdentical(string c, vector<string> &alreadyE)
 class Data_Retrieval
 {
 public:
-Data_Retrieval(){
+    Data_Retrieval(){
 
-};
+    };
     vector<vector<string>> RETRIEVE_DATA(string filename)
-{
-    // Code For Converting .csv data to strings (vector:2D)
-    vector<vector<string>> record;
-    vector<string> row;
-    string line, data;
-
-    fstream file(filename, ios::in);
-    if (file.is_open())
     {
-        while (getline(file, line))
+        // Code For Converting .csv data to strings (vector:2D)
+        vector<vector<string>> record;
+        vector<string> row;
+        string line, data;
+
+        fstream file(filename, ios::in);
+        if (file.is_open())
         {
-            row.clear();
-
-            stringstream s(line);
-            while (getline(s, data, ','))
+            while (getline(file, line))
             {
-                row.push_back(data);
-            }
-            record.push_back(row);
-        }
-    }
-    else
-    {
-        cout << "Could not Open file";
-    }
-    return record;
-}
-MATRIX Bit_Mask(vector<vector<string>> &data)
-{
-    // Converting string data to integers (AKA masking)
-    MATRIX cvt(data.size(), vector<int>(data[0].size() - 1, 0));
-    int index = 1; // First Two Cols not necessary here
-    int row = 0, col = 0;
+                row.clear();
 
-    for (index = 1; index < data[0].size(); index++)
-    {
-        row = 0;
-        int val = 0;
-        vector<string> temp;
-        map<string, int> mp;
-        for (int i = 0; i < data.size(); i++)
+                stringstream s(line);
+                while (getline(s, data, ','))
+                {
+                    row.push_back(data);
+                }
+                record.push_back(row);
+            }
+        }
+        else
         {
-            if (isIdentical(data[i][index], temp) == 0)
-            {
-                mp[data[i][index]] = i;
-            }
-            cvt[row][col] = mp[data[i][index]];
-            row++;
+            cout << "Could not Open file";
         }
-        col++; // next Col
+        return record;
     }
-    return cvt;
-}
+    MATRIX Bit_Mask(vector<vector<string>> &data)
+    {
+        // Converting string data to integers (AKA masking)
+        MATRIX cvt(data.size(), vector<int>(data[0].size() - 1, 0));
+        int index = 1; // First Two Cols not necessary here
+        int row = 0, col = 0;
+
+        for (index = 1; index < data[0].size(); index++)
+        {
+            row = 0;
+            int val = 0;
+            vector<string> temp;
+            map<string, int> mp;
+            for (int i = 0; i < data.size(); i++)
+            {
+                if (isIdentical(data[i][index], temp) == 0)
+                {
+                    mp[data[i][index]] = i;
+                }
+                cvt[row][col] = mp[data[i][index]];
+                row++;
+            }
+            col++; // next Col
+        }
+        return cvt;
+    }
 };
-
 
 bool remove_column(MATRIX &a, int pos)
 {
@@ -451,15 +450,12 @@ public:
         loader();
         loadname();
         ccolor(15);
-        cout << endl << endl;
+        cout << endl
+             << endl;
         showcredits();
         system("cls");
         dname();
         userinput();
-        DecisionTree DT("TEMP.csv");
-        DT.InOrder(DT.root);
-        vector<int> ans = {userreserv, userbudget, usercuisine, usertiming}; //userinput yahan par string mai kaisay ayega?
-        cout << DT.recursivePredict(DT.root, ans) << endl;
     };
     void loadques();
     void loadname();
@@ -481,7 +477,7 @@ int main(int argc, char const *argv[])
     menu M;
 }
 
-void menu:: gotoXY(int x, int y)
+void menu::gotoXY(int x, int y)
 {
     CursorPosition.X = x;
     CursorPosition.Y = y;
@@ -845,7 +841,12 @@ void menu::budgetmenu()
                 dname();
                 userbudget = 1;
                 gotoXY(20, 21);
-                cout << userbudget << userreserv << usertiming << usercuisine;
+                DecisionTree DT("TEMP.csv");
+                system("cls");
+                cout << userbudget << userreserv << usertiming << usercuisine<<endl;
+                DT.InOrder(DT.root);
+                vector<int> ans = {userreserv, userbudget, usercuisine, usertiming}; // userinput yahan par string mai kaisay ayega?
+                cout << DT.recursivePredict(DT.root, ans) << endl;
                 running = false;
                 break;
             }
@@ -855,7 +856,12 @@ void menu::budgetmenu()
                 dname();
                 userbudget = 0;
                 gotoXY(20, 21);
-                cout << userbudget << userreserv << usertiming << usercuisine;
+                DecisionTree DT("TEMP.csv");
+                system("cls");
+                cout << userbudget << userreserv << usertiming << usercuisine<<endl;
+                DT.InOrder(DT.root);
+                vector<int> ans = {userreserv, userbudget, usercuisine, usertiming}; // userinput yahan par string mai kaisay ayega?
+                cout << DT.recursivePredict(DT.root, ans) << endl;
                 running = false;
                 break;
             }
