@@ -188,10 +188,10 @@ bool isIdentical(string c, vector<string> &alreadyE)
 }
 class Data_Retrieval
 {
-private:
-    /* data */
 public:
-    Data_Retrieval(/* args */);
+Data_Retrieval(){
+
+};
     vector<vector<string>> RETRIEVE_DATA(string filename)
 {
     // Code For Converting .csv data to strings (vector:2D)
@@ -444,7 +444,7 @@ public:
 class menu
 {
 public:
-    string userbudget, userreserv, usertiming, usercuisine;
+    int userbudget, userreserv, usertiming, usercuisine;
     menu()
     {
         system("cls");
@@ -458,7 +458,7 @@ public:
         userinput();
         DecisionTree DT("TEMP.csv");
         DT.InOrder(DT.root);
-        vector<int> ans = {1, 0, 0, 0}; //userinput yahan par string mai kaisay ayega?
+        vector<int> ans = {userreserv, userbudget, usercuisine, usertiming}; //userinput yahan par string mai kaisay ayega?
         cout << DT.recursivePredict(DT.root, ans) << endl;
     };
     void loadques();
@@ -843,7 +843,7 @@ void menu::budgetmenu()
             {
                 system("cls");
                 dname();
-                userbudget = "above 5k";
+                userbudget = 1;
                 gotoXY(20, 21);
                 cout << userbudget << userreserv << usertiming << usercuisine;
                 running = false;
@@ -853,7 +853,7 @@ void menu::budgetmenu()
             {
                 system("cls");
                 dname();
-                userbudget = "below 5k";
+                userbudget = 0;
                 gotoXY(20, 21);
                 cout << userbudget << userreserv << usertiming << usercuisine;
                 running = false;
@@ -934,7 +934,7 @@ void menu::reservmenu()
             {
                 system("cls");
                 dname();
-                userreserv = "Yes";
+                userreserv = 1;
                 timingmenu();
                 running = false;
                 break;
@@ -944,7 +944,7 @@ void menu::reservmenu()
                 running = false;
                 system("cls");
                 dname();
-                userreserv = "No";
+                userreserv = 0;
                 mainmenu();
                 break;
             }
@@ -1007,7 +1007,7 @@ void menu::timingmenu()
             {
                 system("cls");
                 dname();
-                usertiming = "Lunch";
+                usertiming = 1;
                 budgetmenu();
                 running = false;
                 break;
@@ -1016,7 +1016,7 @@ void menu::timingmenu()
             {
                 system("cls");
                 dname();
-                usertiming = "Dinner";
+                usertiming = 0;
                 budgetmenu();
                 running = false;
                 break;
@@ -1088,7 +1088,7 @@ void menu::cuisinemenu()
             {
                 system("cls");
                 dname();
-                usercuisine = "American";
+                usercuisine = 0;
                 reservmenu();
                 running = false;
                 break;
@@ -1097,7 +1097,7 @@ void menu::cuisinemenu()
             {
                 system("cls");
                 dname();
-                usercuisine = "Desi";
+                usercuisine = 1;
                 reservmenu();
                 running = false;
                 break;
