@@ -102,28 +102,28 @@ void loadques(){
 		
 }
 void loader(){
-	ccolor(4);
+	ccolor(64);
 	gotoXY(59,7);
     std::cout << 'D' << std::flush;
-    for (int i=0;i<2;i++) {
+    for (int i=0;i<3;i++) {
         Sleep(100);
         std::cout << "\b" << std::flush;
-        gotoXY(63,9);
+        gotoXY(65,8);
         std::cout << "E" << std::flush;
         Sleep(100);
         std::cout << "\b" << std::flush;
-        gotoXY(61,11);
+        gotoXY(65,11);
         std::cout << "L" << std::flush;
         std::cout << "\b" << std::flush;
-        gotoXY(59,13);
+        gotoXY(59,12);
         Sleep(100);
         std::cout << "I" << std::flush;
         std::cout << "\b" << std::flush;
-        gotoXY(57,11);
+        gotoXY(53,11);
         Sleep(100);
         std::cout << "S" << std::flush;
         std::cout << "\b" << std::flush;
-        gotoXY(55,9);
+        gotoXY(53,8);
         Sleep(100);
         std::cout << "H" << std::flush;
     }
