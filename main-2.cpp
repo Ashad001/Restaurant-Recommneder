@@ -836,9 +836,9 @@ void menu::budgetmenu()
                 gotoXY(20, 21);
                 DecisionTree DT("TEMP.csv");
                 system("cls");
-                cout << userbudget << userreserv << usertiming << usercuisine << endl;
+                // cout << userbudget << userreserv << usertiming << usercuisine << endl;
                 // DT.InOrder(DT.root);
-                // vector<int> ans = {userreserv, userbudget, usercuisine, usertiming}; // userinput yahan par string mai kaisay ayega?
+                vector<int> ans = {userreserv, userbudget, usercuisine, usertiming}; // userinput yahan par string mai kaisay ayega?
                 predict = DT.recursivePredict(DT.root, ans);
                 running = false;
                 break;
