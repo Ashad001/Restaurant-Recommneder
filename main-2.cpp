@@ -14,12 +14,15 @@ using namespace std;
 using MATRIX = vector<vector<int>>;
 HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE); // used for goto
 COORD CursorPosition;                             // used for goto
+
 template <class T>
+
 void PrintData1(vector<T> &data)
 {
+    cout << endl;
     for (auto num : data)
     {
-        cout << num << ", ";
+        cout << num << endl;
     }
     cout << endl;
 }
@@ -36,7 +39,6 @@ void PrintData2(vector<vector<T>> &data)
         cout << endl;
     }
 }
-
 
 class bestSplitValues
 {
@@ -164,6 +166,15 @@ public:
         return ret;
     }
 };
+vector<string> GetColumn(vector<vector<string>> &dataT, int col)
+{
+    vector<string> ret;
+    for (int i = 0; i < dataT.size(); i++)
+    {
+        ret.push_back(dataT[i][col]);
+    }
+    return ret;
+}
 vector<int> TreeNode::selectedFeature;
 
 bool isIdentical(string c, vector<string> &alreadyE)
@@ -327,8 +338,9 @@ public:
     Data_Retrieval DR;
     TreeNode *root;
     vector<vector<string>> DataInString;
-    DecisionTree(string filename)
+    DecisionTree(string filename = "TEMP.csv")
     {
+
         // This Constructor Will Fetch The Data and convert to integers
         this->DataInString = DR.RETRIEVE_DATA(filename);
         MATRIX DataForTraining = DR.Bit_Mask(DataInString);
@@ -394,20 +406,22 @@ public:
 class menu
 {
 public:
+    string userrest;
     int userbudget, userreserv, usertiming, usercuisine;
+    DecisionTree DT;
+
     menu()
     {
         system("cls");
         loader();
-        loadname();
         ccolor(15);
         cout << endl
              << endl;
-        showcredits();
         system("cls");
         dname();
         userinput();
     };
+    void restlist(vector<string> names);
     void loadques();
     void loadname();
     void loader();
@@ -421,13 +435,177 @@ public:
     void reservmenu();
     void budgetmenu();
     void cuisinemenu();
+    void PrintList(vector<string> &data);
 };
 
 int main(int argc, char const *argv[])
 {
     menu M;
 }
+void menu::PrintList(vector<string> &data)
+{
+    
+    int i=6;
+    for (auto num : data)
+    {
+        i++;
+        gotoXY(47,i);
+        cout << num << endl;
+    }
+    cout << endl;
+}
+void menu::restlist(vector<string> names)
+{
+    
+    
+    int menu_item = 0, run, x = 7;
+    bool running = true;
 
+    gotoXY(50, 5);
+    cout << "All Restaraunts";
+    gotoXY(45, 7);
+    cout << "->";
+
+    while (running)
+    {
+        gotoXY(47, 7);
+       // sort(names.begin(), names.end());
+        auto it = unique(names.begin(), names.end());
+        names.erase(it, names.end());
+        PrintList(names);
+
+        system("pause>nul"); // the >nul bit causes it the print no message
+
+        if (GetAsyncKeyState(VK_DOWN) && x != 18) // down button pressed
+        {
+            gotoXY(45, x);
+            cout << "  ";
+            x++;
+            gotoXY(45, x);
+            cout << "->";
+            menu_item++;
+            continue;
+        }
+
+        if (GetAsyncKeyState(VK_UP) && x != 7) // up button pressed
+        {
+            gotoXY(45, x);
+            cout << "  ";
+            x--;
+            gotoXY(45, x);
+            cout << "->";
+
+            menu_item--;
+            continue;
+        }
+
+        if (GetAsyncKeyState(VK_RETURN))
+        { // Enter key pressed
+
+            switch (menu_item)
+            {
+
+            case 0:
+            {
+                userrest = "No Lies Fries";
+                system("cls");
+                dname();
+                cuisinemenu();
+                break;
+            }
+            case 1:
+            {
+                userrest = "Ghalib";
+                system("cls");
+                dname();
+                cuisinemenu();
+                break;
+
+            }
+            case 2:
+            {
+                userrest = "Xander's";
+                system("cls");
+                dname();
+                cuisinemenu();
+                break;
+            }
+            case 3:
+            {
+                userrest = "Coconut Grove";
+                system("cls");
+                dname();
+                cuisinemenu();
+                break;
+
+            }
+            case 4:
+            {
+                userrest = "SAGKH";
+                system("cls");
+                dname();
+                cuisinemenu();
+                break;
+            }
+            case 5:
+            {
+                userrest = "Dominos";
+                system("cls");
+                dname();
+                cuisinemenu();
+                break;
+
+            }
+            case 6:
+            {
+                userrest = "Al Kabab";
+                system("cls");
+                dname();
+                cuisinemenu();
+                break;
+            }
+            case 7:
+            {
+                userrest = "Lal Qila";
+                system("cls");
+                dname();
+                cuisinemenu();
+                break;
+
+            }
+            case 8:
+            {
+                userrest = "Burger o'clock";
+                system("cls");
+                dname();
+                cuisinemenu();
+                break;
+            }
+            case 9:
+            {
+                userrest = "Oh my Grill";
+                system("cls");
+                dname();
+                cuisinemenu();
+                break;
+
+            }
+            case 10:
+            {
+                userrest = "Aussies";
+                system("cls");
+                dname();
+                cuisinemenu();
+                break;
+            }
+           
+            }
+        }
+    }
+
+    gotoXY(20, 21);
+
+}
 void menu::gotoXY(int x, int y)
 {
     CursorPosition.X = x;
@@ -467,208 +645,227 @@ void menu::userinput()
 }
 void menu::loadques()
 {
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "\bJ" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "u" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "s" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "t" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << " ";
     std::cout << "A" << std::flush;
-    Sleep(100);
+    Sleep(50);
     std::cout << "n" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "s" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "w" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "e" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "r" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << " ";
     std::cout << "A" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << " ";
     std::cout << "F" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "e" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "w" << std::flush;
     std::cout << " ";
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "Q" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "u" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "e" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "s" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "t" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "i" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "o" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "n" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "s" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << " ";
     std::cout << "A" << std::flush;
-    Sleep(100);
+    Sleep(50);
     std::cout << "n" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "d" << std::flush;
     std::cout << " ";
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "W" << std::flush;
     std::cout << "e" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << " W" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "i" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "l" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "l";
     std::cout << " P" << std::flush;
-    Sleep(100);
+    Sleep(50);
     std::cout << "i" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "c" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "k" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << " O" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "u" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "t";
     std::cout << " T" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "h";
     std::cout << "e" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << " P" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "e" << std::flush;
     std::cout << "r";
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "f" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "e" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "c" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "t" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << " R";
     std::cout << "e" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "s" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "t" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "a" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "u" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "r" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "a";
     std::cout << "n" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "t";
     std::cout << " F" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "o" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "r" << std::flush;
     std::cout << " Y" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "o" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "u" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << " !" << std::flush;
-    Sleep(100);
+    Sleep(50);
     ;
     std::cout << "!" << std::flush;
 }
 void menu::loader()
 {
-    ccolor(64);
-    std::cout << '-' << std::flush;
-    for (int i = 0; i < 20; i++)
+    ccolor(4);
+    gotoXY(59, 7);
+    std::cout << 'D' << std::flush;
+    for (int i = 0; i < 3; i++)
     {
-        Sleep(10);
-        std::cout << "\b\\" << std::flush;
-        Sleep(10);
-        std::cout << "\b|" << std::flush;
-        Sleep(10);
-        std::cout << "\b/" << std::flush;
-        Sleep(10);
-        std::cout << "\b-" << std::flush;
+        Sleep(100);
+        std::cout << "\b" << std::flush;
+        gotoXY(65, 8);
+        std::cout << "E" << std::flush;
+        Sleep(100);
+        std::cout << "\b" << std::flush;
+        gotoXY(65, 11);
+        std::cout << "L" << std::flush;
+        std::cout << "\b" << std::flush;
+        gotoXY(59, 12);
+        Sleep(100);
+        std::cout << "I" << std::flush;
+        std::cout << "\b" << std::flush;
+        gotoXY(53, 11);
+        Sleep(100);
+        std::cout << "S" << std::flush;
+        std::cout << "\b" << std::flush;
+        gotoXY(53, 8);
+        Sleep(100);
+        std::cout << "H" << std::flush;
     }
+    system("cls");
+    gotoXY(45, 9);
+    loadname();
+    gotoXY(48, 11);
+    showcredits();
+    system("cls");
     ccolor(4);
 }
 void menu::loadname()
@@ -781,9 +978,11 @@ void menu::budgetmenu()
         }
 
         int predict = -1;
+        // DecisionTree DT("TEMP.csv");
+
         if (GetAsyncKeyState(VK_RETURN))
         { // Enter key pressed
-
+            vector<int> ans;
             switch (menu_item)
             {
 
@@ -793,12 +992,14 @@ void menu::budgetmenu()
                 dname();
                 userbudget = 1;
                 gotoXY(20, 21);
-                DecisionTree DT("TEMP.csv");
                 system("cls");
                 // cout << userbudget << userreserv << usertiming << usercuisine << endl;
                 // DT.InOrder(DT.root);
-                vector<int> ans = {userreserv, userbudget, usercuisine, usertiming}; // userinput yahan par string mai kaisay ayega?
-                predict = DT.Predicts(DT.root, ans);
+                // vector<int> ans = {userreserv, userbudget, usercuisine, usertiming}; // userinput yahan par string mai kaisay ayega?
+                ans.push_back(userreserv);
+                ans.push_back(userbudget);
+                ans.push_back(usercuisine);
+                ans.push_back(usertiming);
                 running = false;
                 break;
             }
@@ -808,12 +1009,15 @@ void menu::budgetmenu()
                 dname();
                 userbudget = 0;
                 gotoXY(20, 21);
-                DecisionTree DT("TEMP.csv");
+                // DecisionTree DT("TEMP.csv");
                 system("cls");
                 // cout << userbudget << userreserv << usertiming << usercuisine << endl;
                 // DT.InOrder(DT.root);
-                vector<int> ans = {userreserv, userbudget, usercuisine, usertiming}; // userinput yahan par string mai kaisay ayega?
-                predict = DT.Predicts(DT.root, ans);
+                // vector<int> ans = {userreserv, userbudget, usercuisine, usertiming}; // userinput yahan par string mai kaisay ayega?
+                ans.push_back(userreserv);
+                ans.push_back(userbudget);
+                ans.push_back(usercuisine);
+                ans.push_back(usertiming);
                 running = false;
                 break;
             }
@@ -826,17 +1030,28 @@ void menu::budgetmenu()
                 break;
             }
             }
+            predict = DT.Predicts(DT.root, ans);
             if (predict == 0)
             {
-                cout << "Restaurant is not recommended! " << endl;
+                system("cls");
+                dname();
+                gotoXY(45,7);
+                cout << userrest << " is not recommended for you! " << endl;
+                exit(0);
             }
+
             else if (predict == 1)
             {
-                cout << "Restaurant is recommended. you are good to go!" << endl;
+                system("cls");
+                dname();
+                gotoXY(45,7);
+                cout <<userrest<< " is recommended for you. you are good to go!" << endl;
+                exit(0);
             }
             else
             {
                 cout << "out of order " << endl;
+                mainmenu();
             }
         }
     }
@@ -859,6 +1074,7 @@ void menu::reservmenu()
         cout << "1) Yes";
         gotoXY(47, 8);
 
+
         cout << "2) No";
         gotoXY(47, 9);
         cout << "3) Go Back To Main Menu";
@@ -873,6 +1089,7 @@ void menu::reservmenu()
             cout << "->";
             menu_item++;
             continue;
+
         }
 
         if (GetAsyncKeyState(VK_UP) && x != 7) // up button pressed
@@ -1085,10 +1302,12 @@ void menu::cuisinemenu()
         }
     }
 
+
     gotoXY(20, 21);
 }
 void menu::mainmenu()
 {
+    
     int menu_item = 0, run, x = 7;
     bool running = true;
 
@@ -1100,7 +1319,7 @@ void menu::mainmenu()
     while (running)
     {
         gotoXY(47, 7);
-        cout << "1) Find A Restaurant !";
+        cout << "1) View All Restaurants !";
         gotoXY(47, 8);
         cout << "2) Quit Program";
 
@@ -1137,7 +1356,6 @@ void menu::mainmenu()
 
             case 0:
             {
-
                 gotoXY(47, 16);
                 cout << "Finding Restaurants !";
                 Sleep(100);
@@ -1147,8 +1365,10 @@ void menu::mainmenu()
                     Sleep(400);
                     cout << " \b.";
                 }
-                system("cls");
+                system("cls"); 
                 dname();
+                vector<string> gg = GetColumn(DT.DataInString, 0);
+                restlist(gg);
                 cuisinemenu();
                 break;
             }
@@ -1158,10 +1378,11 @@ void menu::mainmenu()
                 cout << "The program has now terminated!!";
                 exit(0);
                 running = false;
+
             }
             }
         }
     }
 
     gotoXY(20, 21);
-}
+} 
