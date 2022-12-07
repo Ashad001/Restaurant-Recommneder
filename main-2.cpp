@@ -413,7 +413,7 @@ public:
     menu()
     {
         system("cls");
-        loader();
+        // loader();
         ccolor(15);
         cout << endl
              << endl;
@@ -442,6 +442,168 @@ int main(int argc, char const *argv[])
 {
     menu M;
 }
+// void menu::PrintList(vector<string> &data)
+// {
+
+//     int i = 6;
+//     for (auto num : data)
+//     {
+//         i++;
+//         gotoXY(47, i);
+//         cout << num << endl;
+//     }
+//     cout << endl;
+// }
+// void menu::restlist(vector<string> names)
+// {
+
+//     int menu_item = 0, run, x = 7;
+//     bool running = true;
+
+//     gotoXY(50, 5);
+//     cout << "All Restaraunts";
+//     gotoXY(45, 7);
+//     cout << "->";
+
+//     while (running)
+//     {
+//         gotoXY(47, 7);
+//         //auto it = unique(names.begin(), names.end());
+//         // names.erase(it, names.end());
+//         PrintList(names);
+
+//         system("pause>nul"); // the >nul bit causes it the print no message
+
+//         if (GetAsyncKeyState(VK_DOWN) && x != 39) // down button pressed
+//         {
+//             gotoXY(45, x);
+//             cout << "  ";
+//             x++;
+//             gotoXY(45, x);
+//             cout << "->";
+//             menu_item++;
+//             continue;
+//         }
+
+//         if (GetAsyncKeyState(VK_UP) && x != 7) // up button pressed
+//         {
+//             gotoXY(45, x);
+//             cout << "  ";
+//             x--;
+//             gotoXY(45, x);
+//             cout << "->";
+
+//             menu_item--;
+//             continue;
+//         }
+
+//         if (GetAsyncKeyState(VK_RETURN))
+//         { // Enter key pressed
+
+//             switch (menu_item)
+//             {
+
+//             case 0:
+//             {
+//                 userrest = "No Lies Fries";
+//                 system("cls");
+//                 dname();
+//                 cuisinemenu();
+//                 break;
+//             }
+//             case 1:
+//             {
+//                 userrest = "Ghalib";
+//                 system("cls");
+//                 dname();
+//                 cuisinemenu();
+//                 break;
+//             }
+//             case 2:
+//             {
+//                 userrest = "Xander's";
+//                 system("cls");
+//                 dname();
+//                 cuisinemenu();
+//                 break;
+//             }
+//             case 3:
+//             {
+//                 userrest = "Coconut Grove";
+//                 system("cls");
+//                 dname();
+//                 cuisinemenu();
+//                 break;
+//             }
+//             case 4:
+//             {
+//                 userrest = "SAGKH";
+//                 system("cls");
+//                 dname();
+//                 cuisinemenu();
+//                 break;
+//             }
+//             case 5:
+//             {
+//                 userrest = "Dominos";
+//                 system("cls");
+//                 dname();
+//                 cuisinemenu();
+//                 break;
+//             }
+//             case 6:
+//             {
+//                 userrest = "Al Kabab";
+//                 system("cls");
+//                 dname();
+//                 cuisinemenu();
+//                 break;
+//             }
+//             case 7:
+//             {
+//                 userrest = "Lal Qila";
+//                 system("cls");
+//                 dname();
+//                 cuisinemenu();
+//                 break;
+//             }
+//             case 8:
+//             {
+//                 userrest = "Burger o'clock";
+//                 system("cls");
+//                 dname();
+//                 cuisinemenu();
+//                 break;
+//             }
+//             case 9:
+//             {
+//                 userrest = "Oh my Grill";
+//                 system("cls");
+//                 dname();
+//                 cuisinemenu();
+//                 break;
+//             }
+//             case 10:
+//             {
+//                 userrest = "Aussies";
+//                 system("cls");
+//                 dname();
+//                 cuisinemenu();
+//                 break;
+//             }
+//             default:
+//             {
+//                 system("cls");
+//                 cuisinemenu();
+//                 break;
+//             }
+//             }
+//         }
+//     }
+
+//     gotoXY(20, 21);
+// }
+
 void menu::PrintList(vector<string> &data)
 {
     
@@ -469,14 +631,15 @@ void menu::restlist(vector<string> names)
     while (running)
     {
         gotoXY(47, 7);
-       // sort(names.begin(), names.end());
+       sort(names.begin(), names.end());
         auto it = unique(names.begin(), names.end());
         names.erase(it, names.end());
         PrintList(names);
 
         system("pause>nul"); // the >nul bit causes it the print no message
 
-        if (GetAsyncKeyState(VK_DOWN) && x != 18) // down button pressed
+        if (GetAsyncKeyState(VK_DOWN) && x != 35
+        ) // down button pressed
         {
             gotoXY(45, x);
             cout << "  ";
@@ -486,7 +649,6 @@ void menu::restlist(vector<string> names)
             menu_item++;
             continue;
         }
-
 
         if (GetAsyncKeyState(VK_UP) && x != 7) // up button pressed
         {
@@ -508,7 +670,7 @@ void menu::restlist(vector<string> names)
 
             case 0:
             {
-                userrest = "No Lies Fries";
+                userrest = "Al Kabab";
                 system("cls");
                 dname();
                 cuisinemenu();
@@ -516,7 +678,7 @@ void menu::restlist(vector<string> names)
             }
             case 1:
             {
-                userrest = "Ghalib";
+                userrest = "Aussies";
                 system("cls");
                 dname();
                 cuisinemenu();
@@ -525,7 +687,7 @@ void menu::restlist(vector<string> names)
             }
             case 2:
             {
-                userrest = "Xander's";
+                userrest = "Burger o'clock";
                 system("cls");
                 dname();
                 cuisinemenu();
@@ -542,7 +704,7 @@ void menu::restlist(vector<string> names)
             }
             case 4:
             {
-                userrest = "SAGKH";
+                userrest = "Dominos";
                 system("cls");
                 dname();
                 cuisinemenu();
@@ -550,7 +712,7 @@ void menu::restlist(vector<string> names)
             }
             case 5:
             {
-                userrest = "Dominos";
+                userrest = "Ghalib";
                 system("cls");
                 dname();
                 cuisinemenu();
@@ -559,7 +721,7 @@ void menu::restlist(vector<string> names)
             }
             case 6:
             {
-                userrest = "Al Kabab";
+                userrest = "Lal Qila";
                 system("cls");
                 dname();
                 cuisinemenu();
@@ -567,7 +729,7 @@ void menu::restlist(vector<string> names)
             }
             case 7:
             {
-                userrest = "Lal Qila";
+                userrest = "Meat the Cheese";
                 system("cls");
                 dname();
                 cuisinemenu();
@@ -576,7 +738,7 @@ void menu::restlist(vector<string> names)
             }
             case 8:
             {
-                userrest = "Burger o'clock";
+                userrest = "No Lies Fries";
                 system("cls");
                 dname();
                 cuisinemenu();
@@ -593,13 +755,25 @@ void menu::restlist(vector<string> names)
             }
             case 10:
             {
-                userrest = "Aussies";
+                userrest = "SAGKH";
                 system("cls");
                 dname();
                 cuisinemenu();
                 break;
             }
-           
+            case 11:
+            {
+                userrest = "Xander's";
+                system("cls");
+                dname();
+                cuisinemenu();
+                break;
+            }
+            default:
+            {
+                cuisinemenu();
+                break;
+            }
             }
         }
     }
@@ -607,6 +781,7 @@ void menu::restlist(vector<string> names)
     gotoXY(20, 21);
 
 }
+
 void menu::gotoXY(int x, int y)
 {
     CursorPosition.X = x;
@@ -638,7 +813,7 @@ void menu::userinput()
     cout << endl
          << endl
          << "\t\t";
-    loadques();
+    // loadques();
     Sleep(500);
     system("cls");
     dname();
@@ -1036,7 +1211,7 @@ void menu::budgetmenu()
             {
                 system("cls");
                 dname();
-                gotoXY(45,7);
+                gotoXY(45, 7);
                 cout << userrest << " is not recommended for you! " << endl;
                 exit(0);
             }
@@ -1045,8 +1220,8 @@ void menu::budgetmenu()
             {
                 system("cls");
                 dname();
-                gotoXY(45,7);
-                cout <<userrest<< " is recommended for you. you are good to go!" << endl;
+                gotoXY(45, 7);
+                cout << userrest << " is recommended for you. you are good to go!" << endl;
                 exit(0);
             }
             else
@@ -1075,7 +1250,6 @@ void menu::reservmenu()
         cout << "1) Yes";
         gotoXY(47, 8);
 
-
         cout << "2) No";
         gotoXY(47, 9);
         cout << "3) Go Back To Main Menu";
@@ -1090,7 +1264,6 @@ void menu::reservmenu()
             cout << "->";
             menu_item++;
             continue;
-
         }
 
         if (GetAsyncKeyState(VK_UP) && x != 7) // up button pressed
@@ -1303,12 +1476,11 @@ void menu::cuisinemenu()
         }
     }
 
-
     gotoXY(20, 21);
 }
 void menu::mainmenu()
 {
-    
+
     int menu_item = 0, run, x = 7;
     bool running = true;
 
@@ -1366,7 +1538,7 @@ void menu::mainmenu()
                     Sleep(400);
                     cout << " \b.";
                 }
-                system("cls"); 
+                system("cls");
                 dname();
                 vector<string> gg = GetColumn(DT.DataInString, 0);
                 restlist(gg);
@@ -1379,11 +1551,10 @@ void menu::mainmenu()
                 cout << "The program has now terminated!!";
                 exit(0);
                 running = false;
-
             }
             }
         }
     }
 
     gotoXY(20, 21);
-} 
+}

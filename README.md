@@ -27,8 +27,8 @@ The Data Set For out model consist of these features/questions.
 
 Providing that, the data set of our model looked like this:
 _____________________________________________________________________________
-| Name           | Recommended | Reservations | Pricing  | Cuissine | Timing |
-| -------------- | ----------- | ------------ | -------- | -------- | ------ |
+| Name           | Recommended   | Reservations | Pricing  | Cuissine | Timing |
+| -------------- | -----------   | ------------ | -------- | -------- | ------ |
 | No Lies Fries  |   NO          | no           | below 5k | American | Dinner |
 | Ghalib         |   YES         | yes          | above 5k | Desi     | Lunch  |
 | Xander's       |   YES         | yes          | below 5k | American | Lunch  |

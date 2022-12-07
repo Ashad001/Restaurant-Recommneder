@@ -338,7 +338,7 @@ public:
     Data_Retrieval DR;
     TreeNode *root;
     vector<vector<string>> DataInString;
-    DecisionTree(string filename = "TEMP.csv")
+    DecisionTree(string filename = "Big Data.csv")
     {
 
         // This Constructor Will Fetch The Data and convert to integers
@@ -460,16 +460,18 @@ void menu::restlist(vector<string> names)
     
     int menu_item = 0, run, x = 7;
     bool running = true;
-
     gotoXY(50, 5);
     cout << "All Restaraunts";
     gotoXY(45, 7);
     cout << "->";
+    
 
     while (running)
     {
+        system("cls");
+        dname();
         gotoXY(47, 7);
-       // sort(names.begin(), names.end());
+        sort(names.begin(), names.end());
         auto it = unique(names.begin(), names.end());
         names.erase(it, names.end());
         PrintList(names);
