@@ -487,6 +487,7 @@ void menu::restlist(vector<string> names)
             continue;
         }
 
+
         if (GetAsyncKeyState(VK_UP) && x != 7) // up button pressed
         {
             gotoXY(45, x);
