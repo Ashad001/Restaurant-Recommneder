@@ -1,4 +1,4 @@
-Ghalib,0,yes,above 5k,Desi,Lunch
+nsGhalib,0,yes,above 5k,Desi,Lunch
 Ghalib,1,yes,below 5k,Desi,Breakfast
 Dunkin,1,no,below 5k,American,Breakfast
 Xander's,1,yes,below 5k,American,Lunch
@@ -12,7 +12,7 @@ No Lies Fries,0,no,below 5k,American,Lunch
 Mandi House,1,yes,above 5k,Middle Eastern,Dinner
 Dominos,1,no,below 5k,American,Lunch
 Dominos,1,no,below 5k,American,Dinner
-Zeytin,1,yes,below 5k,Middle Eastern,Dinner
+Zeytin,1,yes,below 5k,Middle Eastern,Dinnero
 Al Kabab,1,no,below 5k,Desi,Dinner
 Zameer Ansari,1,no,above 5k,Middle Eastern,Dinner
 Zameer Ansari,0,no,below 5k,Middle Eastern,Lunch

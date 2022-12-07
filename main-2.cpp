@@ -1,7 +1,6 @@
 #include <iostream>
 #include <windows.h> // for sleep()
 #include <conio.h>
-// #include <cstdlib>
 #include <map>
 #include <string>
 #include <vector>
@@ -340,7 +339,6 @@ public:
     vector<vector<string>> DataInString;
     DecisionTree(string filename = "TEMP.csv")
     {
-
         // This Constructor Will Fetch The Data and convert to integers
         this->DataInString = DR.RETRIEVE_DATA(filename);
         MATRIX DataForTraining = DR.Bit_Mask(DataInString);
@@ -349,6 +347,7 @@ public:
         rootC->bestSplit.Feature = r.first;
         rootC->bestSplit.resEntropy = r.second;
         this->root = rootC;
+
         ConstructTree(root);
     }
 
@@ -359,6 +358,8 @@ public:
         if (node->bestSplit.Feature > 0 && node->bestSplit.resEntropy > 0.f)
         {
             TwoMatrix children = Split_Data(node->trainData, node->bestSplit.Feature);
+            system("cls");
+
             if (children.accepted.size() > 0)
             {
                 TreeNode *rightChild = new TreeNode(children.accepted);
@@ -413,7 +414,7 @@ public:
     menu()
     {
         system("cls");
-        // loader();
+        loader();
         ccolor(15);
         cout << endl
              << endl;
@@ -429,7 +430,6 @@ public:
     void userinput();
     void showcredits();
     void dname();
-    void gotoXY(int, int);
     void mainmenu();
     void timingmenu();
     void reservmenu();
@@ -437,189 +437,33 @@ public:
     void cuisinemenu();
     void PrintList(vector<string> &data);
 };
+void gotoXY(int x, int y)
+{
+    CursorPosition.X = x;
+    CursorPosition.Y = y;
+    SetConsoleCursorPosition(console, CursorPosition);
+}
 
 int main(int argc, char const *argv[])
 {
     menu M;
 }
-// void menu::PrintList(vector<string> &data)
-// {
-
-//     int i = 6;
-//     for (auto num : data)
-//     {
-//         i++;
-//         gotoXY(47, i);
-//         cout << num << endl;
-//     }
-//     cout << endl;
-// }
-// void menu::restlist(vector<string> names)
-// {
-
-//     int menu_item = 0, run, x = 7;
-//     bool running = true;
-
-//     gotoXY(50, 5);
-//     cout << "All Restaraunts";
-//     gotoXY(45, 7);
-//     cout << "->";
-
-//     while (running)
-//     {
-//         gotoXY(47, 7);
-//         //auto it = unique(names.begin(), names.end());
-//         // names.erase(it, names.end());
-//         PrintList(names);
-
-//         system("pause>nul"); // the >nul bit causes it the print no message
-
-//         if (GetAsyncKeyState(VK_DOWN) && x != 39) // down button pressed
-//         {
-//             gotoXY(45, x);
-//             cout << "  ";
-//             x++;
-//             gotoXY(45, x);
-//             cout << "->";
-//             menu_item++;
-//             continue;
-//         }
-
-//         if (GetAsyncKeyState(VK_UP) && x != 7) // up button pressed
-//         {
-//             gotoXY(45, x);
-//             cout << "  ";
-//             x--;
-//             gotoXY(45, x);
-//             cout << "->";
-
-//             menu_item--;
-//             continue;
-//         }
-
-//         if (GetAsyncKeyState(VK_RETURN))
-//         { // Enter key pressed
-
-//             switch (menu_item)
-//             {
-
-//             case 0:
-//             {
-//                 userrest = "No Lies Fries";
-//                 system("cls");
-//                 dname();
-//                 cuisinemenu();
-//                 break;
-//             }
-//             case 1:
-//             {
-//                 userrest = "Ghalib";
-//                 system("cls");
-//                 dname();
-//                 cuisinemenu();
-//                 break;
-//             }
-//             case 2:
-//             {
-//                 userrest = "Xander's";
-//                 system("cls");
-//                 dname();
-//                 cuisinemenu();
-//                 break;
-//             }
-//             case 3:
-//             {
-//                 userrest = "Coconut Grove";
-//                 system("cls");
-//                 dname();
-//                 cuisinemenu();
-//                 break;
-//             }
-//             case 4:
-//             {
-//                 userrest = "SAGKH";
-//                 system("cls");
-//                 dname();
-//                 cuisinemenu();
-//                 break;
-//             }
-//             case 5:
-//             {
-//                 userrest = "Dominos";
-//                 system("cls");
-//                 dname();
-//                 cuisinemenu();
-//                 break;
-//             }
-//             case 6:
-//             {
-//                 userrest = "Al Kabab";
-//                 system("cls");
-//                 dname();
-//                 cuisinemenu();
-//                 break;
-//             }
-//             case 7:
-//             {
-//                 userrest = "Lal Qila";
-//                 system("cls");
-//                 dname();
-//                 cuisinemenu();
-//                 break;
-//             }
-//             case 8:
-//             {
-//                 userrest = "Burger o'clock";
-//                 system("cls");
-//                 dname();
-//                 cuisinemenu();
-//                 break;
-//             }
-//             case 9:
-//             {
-//                 userrest = "Oh my Grill";
-//                 system("cls");
-//                 dname();
-//                 cuisinemenu();
-//                 break;
-//             }
-//             case 10:
-//             {
-//                 userrest = "Aussies";
-//                 system("cls");
-//                 dname();
-//                 cuisinemenu();
-//                 break;
-//             }
-//             default:
-//             {
-//                 system("cls");
-//                 cuisinemenu();
-//                 break;
-//             }
-//             }
-//         }
-//     }
-
-//     gotoXY(20, 21);
-// }
 
 void menu::PrintList(vector<string> &data)
 {
-    
-    int i=6;
+
+    int i = 6;
     for (auto num : data)
     {
         i++;
-        gotoXY(47,i);
+        gotoXY(47, i);
         cout << num << endl;
     }
     cout << endl;
 }
 void menu::restlist(vector<string> names)
 {
-    
-    
+
     int menu_item = 0, run, x = 7;
     bool running = true;
 
@@ -631,15 +475,14 @@ void menu::restlist(vector<string> names)
     while (running)
     {
         gotoXY(47, 7);
-       sort(names.begin(), names.end());
+        sort(names.begin(), names.end());
         auto it = unique(names.begin(), names.end());
         names.erase(it, names.end());
         PrintList(names);
 
         system("pause>nul"); // the >nul bit causes it the print no message
 
-        if (GetAsyncKeyState(VK_DOWN) && x != 35
-        ) // down button pressed
+        if (GetAsyncKeyState(VK_DOWN) && x != 35) // down button pressed
         {
             gotoXY(45, x);
             cout << "  ";
@@ -683,7 +526,6 @@ void menu::restlist(vector<string> names)
                 dname();
                 cuisinemenu();
                 break;
-
             }
             case 2:
             {
@@ -700,7 +542,6 @@ void menu::restlist(vector<string> names)
                 dname();
                 cuisinemenu();
                 break;
-
             }
             case 4:
             {
@@ -717,7 +558,6 @@ void menu::restlist(vector<string> names)
                 dname();
                 cuisinemenu();
                 break;
-
             }
             case 6:
             {
@@ -734,7 +574,6 @@ void menu::restlist(vector<string> names)
                 dname();
                 cuisinemenu();
                 break;
-
             }
             case 8:
             {
@@ -751,7 +590,6 @@ void menu::restlist(vector<string> names)
                 dname();
                 cuisinemenu();
                 break;
-
             }
             case 10:
             {
@@ -779,19 +617,13 @@ void menu::restlist(vector<string> names)
     }
 
     gotoXY(20, 21);
-
 }
 
-void menu::gotoXY(int x, int y)
-{
-    CursorPosition.X = x;
-    CursorPosition.Y = y;
-    SetConsoleCursorPosition(console, CursorPosition);
-}
 void menu::dname()
 {
     ccolor(4);
-    cout << "\t\t\t\t\tD E L I S H \tA D V O C A C Y";
+    gotoXY(43, 0);
+    cout << "D E L I S H \tA D V O C A C Y";
     ccolor(15);
 }
 void menu::ccolor(int clr)
@@ -813,7 +645,7 @@ void menu::userinput()
     cout << endl
          << endl
          << "\t\t";
-    // loadques();
+    loadques();
     Sleep(500);
     system("cls");
     dname();
@@ -1110,6 +942,36 @@ void menu::showcredits()
     ;
     ccolor(15);
 }
+bool sortcol(const vector<string> &v1, const vector<string> &v2)
+{
+    return v1[0] < v2[0];
+}
+void printacceptedreslist(vector<vector<string>> data, int uc)
+{
+
+    string dupcheck;
+    sort(data.begin(), data.end(), sortcol);
+    string cuisine;
+    if (uc == 1)
+    {
+        cuisine = "Desi";
+    }
+    else
+    {
+        cuisine = "American";
+    }
+    int j = 11;
+
+    for (int i = 0; i < data.size(); i++)
+    {
+        if (data[i][4] == cuisine && data[i][1] == "1" && data[i][0] != dupcheck)
+        {
+            gotoXY(38, j++);
+            cout << data[i][0] << endl;
+            dupcheck = data[i][0];
+        }
+    }
+}
 void menu::budgetmenu()
 {
     int menu_item = 0, run, x = 7;
@@ -1169,9 +1031,6 @@ void menu::budgetmenu()
                 userbudget = 1;
                 gotoXY(20, 21);
                 system("cls");
-                // cout << userbudget << userreserv << usertiming << usercuisine << endl;
-                // DT.InOrder(DT.root);
-                // vector<int> ans = {userreserv, userbudget, usercuisine, usertiming}; // userinput yahan par string mai kaisay ayega?
                 ans.push_back(userreserv);
                 ans.push_back(userbudget);
                 ans.push_back(usercuisine);
@@ -1185,11 +1044,7 @@ void menu::budgetmenu()
                 dname();
                 userbudget = 0;
                 gotoXY(20, 21);
-                // DecisionTree DT("TEMP.csv");
                 system("cls");
-                // cout << userbudget << userreserv << usertiming << usercuisine << endl;
-                // DT.InOrder(DT.root);
-                // vector<int> ans = {userreserv, userbudget, usercuisine, usertiming}; // userinput yahan par string mai kaisay ayega?
                 ans.push_back(userreserv);
                 ans.push_back(userbudget);
                 ans.push_back(usercuisine);
@@ -1209,10 +1064,20 @@ void menu::budgetmenu()
             predict = DT.Predicts(DT.root, ans);
             if (predict == 0)
             {
+                string printcuisine;
+                if (usercuisine = 1)
+                    printcuisine = "Desi";
+                else
+                    printcuisine = "American";
+
                 system("cls");
                 dname();
-                gotoXY(45, 7);
-                cout << userrest << " is not recommended for you! " << endl;
+                gotoXY(39, 4);
+                cout << userrest << " is not recommended for you! " << endl
+                     << endl;
+                gotoXY(37, 9);
+                cout << "Below are some " << printcuisine << " recommendation for you : " << endl;
+                printacceptedreslist(DT.DataInString, usercuisine); // all american retaurant printing, lekin double double
                 exit(0);
             }
 
@@ -1220,7 +1085,7 @@ void menu::budgetmenu()
             {
                 system("cls");
                 dname();
-                gotoXY(45, 7);
+                gotoXY(35, 4);
                 cout << userrest << " is recommended for you. you are good to go!" << endl;
                 exit(0);
             }
