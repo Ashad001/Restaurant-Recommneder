@@ -347,7 +347,6 @@ public:
         rootC->bestSplit.Feature = r.first;
         rootC->bestSplit.resEntropy = r.second;
         this->root = rootC;
-
         ConstructTree(root);
     }
 
